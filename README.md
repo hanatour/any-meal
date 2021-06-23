@@ -1,3 +1,3 @@
 # any-meal
 
-* recommend a near restaurant
+* Recommends a near restaurant
