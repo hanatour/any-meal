@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            geoFindMe();
+
+        }
+
+        //사용자 좌표 가져오기
+        function geoFindMe() {
+
+            function success(position) {
+                const y  = position.coords.latitude;
+                const x = position.coords.longitude;
+
+                getFunc(x, y);
+            }
+
+            function error() {
+                alert('Unable to retrieve your location');
+            }
+
+            if(!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser');
+            } else {
+                //status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+
+        }
+
+        var xhr;
+        function getFunc(x, y) {
+
+            var url = `http://localhost:8080/restaurant/near?x=${x}&y=${y}`;
+
+            xhr = new XMLHttpRequest();
+            xhr.open("get", url, true);
+
+            xhr.onreadystatechange = function () { //폴백
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) { //200
+                        process();
+                    } else {
+                        alert("요청오류 : " + xhr.status);
+                    }
+                }
+            }
+
+            xhr.send(null); //get방식일때 null
+
+        }
+
+        function process() {
+            var data = xhr.responseText;
+            alert("요청 결과 : " + data);
+            var json = JSON.parse(data);
+            var placeName = json.place_name;
+            var placeUrl = json.place_url;
+            document.write(
+                `<a href=${placeUrl}>${placeName}</a>`
+            );
+        }
+
+    </script>
+</head>
+<body>
+</body>
+</html>
