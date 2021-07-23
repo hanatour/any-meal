@@ -22,11 +22,24 @@ public class AnyMealService {
    * @return 식당 정보
    */
   public static Optional<Restaurant> getRestaurantNear(String x, String y) {
-    List<Restaurant> restaurants = getRestaurantNear(x, y, "distance", "500", "FD6", 1);
+    List<Restaurant> restaurants = getRestaurantNearAllPages(x, y, "distance", "500", "FD6", 1);
     return restaurants.stream().findFirst();
   }
 
-  private static List<Restaurant> getRestaurantNear(String x, String y, String sort, String radius, String categoryCode, int page){
+  static List<Restaurant> getRestaurantNearAllPages(String x, String y, String sort, String radius, String categoryCode, int page) {
+    CategoryResponse categoryResponse = getRestaurantNear(x, y, sort, radius, categoryCode, page);
+    if (categoryResponse == null) {
+      return Collections.emptyList();
+    }
+    final List<Restaurant> restaurants = categoryResponse.getRestaurants();
+    if (categoryResponse.getMeta().getEnd()) {
+      return restaurants;
+    }
+    restaurants.addAll(getRestaurantNearAllPages(x, y, sort, radius, categoryCode, page + 1));
+    return restaurants;
+  }
+
+  static CategoryResponse getRestaurantNear(String x, String y, String sort, String radius, String categoryCode, int page){
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", "KakaoAK 39d7fcaff32cd31ddae76c988072fa72");
     HttpEntity<Void> entity = new HttpEntity<>(headers);
@@ -40,11 +53,9 @@ public class AnyMealService {
             .queryParam("category_group_code", categoryCode)
             .queryParam("page", page);
 
-    HttpEntity<Documents> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Documents.class);
-    if (response.getBody() == null) {
-      return Collections.emptyList();
-    }
-    return response.getBody().getDocuments();
+    HttpEntity<CategoryResponse> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, CategoryResponse.class);
+
+    return response.getBody();
   }
 
 }

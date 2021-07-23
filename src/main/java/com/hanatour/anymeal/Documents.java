@@ -12,4 +12,6 @@ public class Documents {
   public void setDocuments(List<Restaurant> documents) {
     this.documents = documents;
   }
+
+
 }
