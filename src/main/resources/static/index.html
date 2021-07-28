@@ -56,7 +56,7 @@
 
         function process() {
             var data = xhr.responseText;
-            alert("요청 결과 : " + data);
+            //alert("요청 결과 : " + data);
             var json = JSON.parse(data);
             var placeName = json.place_name;
             var placeUrl = json.place_url;
