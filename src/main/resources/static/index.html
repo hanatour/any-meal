@@ -20,7 +20,8 @@
             }
 
             function error() {
-                alert('Unable to retrieve your location');
+                console.log('Unable to retrieve your location');
+                getFunc("", "");
             }
 
             if(!navigator.geolocation) {
@@ -35,14 +36,14 @@
         var xhr;
         function getFunc(x, y) {
 
-            var url = `http://localhost:8080/restaurant/near?x=${x}&y=${y}`;
+            var url = `/restaurant/near?x=${x}&y=${y}`;
 
             xhr = new XMLHttpRequest();
             xhr.open("get", url, true);
 
             xhr.onreadystatechange = function () { //폴백
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) { //200
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) { //200
                         process();
                     } else {
                         alert("요청오류 : " + xhr.status);
@@ -61,7 +62,29 @@
             var placeName = json.place_name;
             var placeUrl = json.place_url;
             document.write(
-                `<a href=${placeUrl}>${placeName}</a>`
+                `
+                <style type="text/css">
+                .vertical-align-content {
+                  background-color:#f18c16;
+                  height:150px;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                }
+                </style>
+                <div class="vertical-align-content">
+                <span
+                style="
+                font-style: italic;
+                font-weight: bold;
+                font-size: 2.5em;
+                line-height: 2.0em;
+                color: navy;
+                font-family: monospace;
+                ">
+                오늘 식사는 <a href=${placeUrl}>${placeName}</a>에서 어때요?
+                </span></div>
+                `
             );
         }
 

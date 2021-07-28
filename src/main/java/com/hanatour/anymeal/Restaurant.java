@@ -2,6 +2,8 @@ package com.hanatour.anymeal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class Restaurant {
     /*
     {"address_name":"서울 종로구 공평동 5-1","category_group_code":"FD6","category_group_name":"음식점",
@@ -128,6 +130,19 @@ public class Restaurant {
 
   public void setY(String y) {
     this.y = y;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Restaurant that = (Restaurant) o;
+    return Objects.equals(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 
   @Override

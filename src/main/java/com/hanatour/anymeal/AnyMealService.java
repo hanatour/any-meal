@@ -18,6 +18,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AnyMealService {
+  private static SecureRandom secureRandom;
+  static {
+    try {
+      secureRandom = SecureRandom.getInstanceStrong();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+      secureRandom = new SecureRandom();
+    }
+  }
 
   private AnyMealService() {
   }
@@ -32,25 +41,24 @@ public class AnyMealService {
     Coordinate lat = Coordinate.fromDegrees(Double.parseDouble(y));
     Coordinate lng = Coordinate.fromDegrees(Double.parseDouble(x));
     Point orgPoint = Point.at(lat, lng);
-    Point point1 = EarthCalc.gcd.pointAt(orgPoint, 0., 90.);
-    Point point2 = EarthCalc.gcd.pointAt(orgPoint, 90., 90.);
-    Point point3 = EarthCalc.gcd.pointAt(orgPoint, 180., 90.);
-    Point point4 = EarthCalc.gcd.pointAt(orgPoint, 270., 90.);
+    Point point1 = EarthCalc.gcd.pointAt(orgPoint, 0., 190.);
+    Point point2 = EarthCalc.gcd.pointAt(orgPoint, 90., 190.);
+    Point point3 = EarthCalc.gcd.pointAt(orgPoint, 180., 190.);
+    Point point4 = EarthCalc.gcd.pointAt(orgPoint, 270., 190.);
     List<Point> points = Arrays.asList(point1, point2, point3, point4);
     List<Restaurant> restaurants =
             points.stream()
                     .parallel()
-                    .flatMap(p -> getRestaurantNearAllPages(p, "distance", 100, "FD6", 1).stream())
+                    .flatMap(p -> getRestaurantNearAllPages(p, "distance", 500, "FD6", 1).stream())
                     .distinct()
+                    .peek(System.out::println)
                     .collect(Collectors.toList());
     System.out.println(restaurants.size());
-    try {
-      int index = Math.abs(SecureRandom.getInstanceStrong().nextInt()) % restaurants.size();
+    if (restaurants.size() > 1) {
+      int index = Math.abs(secureRandom.nextInt()) % restaurants.size();
       return Optional.of(restaurants.get(index));
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-      return restaurants.stream().findAny();
     }
+    return restaurants.stream().findAny();
   }
 
   static List<Restaurant> getRestaurantNearAllPages(Point point, String sort, int radius, String categoryCode, int page) {
