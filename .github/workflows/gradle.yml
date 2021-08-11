@@ -25,3 +25,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Deploy to my EC2 instance
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SOURCE: "./build/libs/"
+        REMOTE_HOST: "13.125.189.124"
+        REMOTE_USER: "ec2-user"
+        TARGET: "/home/ec2-user/any-meal"
