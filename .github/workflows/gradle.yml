@@ -47,6 +47,6 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          nohup java -jar ~/any-meal/any-meal-0.0.1-SNAPSHOT.jar 2>&1 > ~/any-meal/any-meal.out &
+          nohup java -jar ~/any-meal/any-meal-0.0.1-SNAPSHOT.jar &
           disown
         
