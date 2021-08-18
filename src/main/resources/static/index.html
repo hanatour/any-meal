@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Any-Meal</title>
     <script>
         window.onload = function () {
             geoFindMe();
@@ -64,26 +64,38 @@
             document.write(
                 `
                 <style type="text/css">
-                .vertical-align-content {
-                  background-color:#f18c16;
-                  height:150px;
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                }
+                    @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+                    .body {
+                        background-color: #F6AC17
+                    }
+                    .vertical-align-content {
+                        height: 350px;
+                        padding: 70px 0;
+                        /*background-color: aqua;*/
+                    }
+                    .text-content {
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        line-height: 1.5em;
+                        font-family: 'NanumSquare', sans-serif;
+                        text-align: center;
+                        /*background-color: green;*/
+                    }
                 </style>
-                <div class="vertical-align-content">
-                <span
-                style="
-                font-style: italic;
-                font-weight: bold;
-                font-size: 2.5em;
-                line-height: 2.0em;
-                color: navy;
-                font-family: monospace;
-                ">
-                오늘 식사는 <a href=${placeUrl}>${placeName}</a>에서 어때요?
-                </span></div>
+
+                <body class="body">
+                    <div class="vertical-align-content">
+                        <div class="text-content">
+                            오늘 식사는
+                        </div>
+                        <div class="text-content">
+                            <a href=${placeUrl}>'${placeName}'</a>
+                        </div>
+                        <div class="text-content">
+                            어때요?
+                        </div>
+                    </div>
+                </body>
                 `
             );
         }
