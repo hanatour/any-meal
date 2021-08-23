@@ -9,9 +9,13 @@
             background-color: #F6AC17
         }
         .vertical-align-content {
-            height: 350px;
+            /*height: 300px;*/
+            /*width: 500px;*/
             padding: 70px 0;
             /*background-color: aqua;*/
+            background-image: url("../img/bg.png");
+            background-position: center;
+            background-repeat: no-repeat;
         }
         .text-content {
             font-size: 2.5em;
@@ -21,12 +25,24 @@
             text-align: center;
             /*background-color: green;*/
         }
+        .text-content-bold {
+            font-size: 1.5em;
+            font-weight: bolder;
+        }
+        .top-ci {
+            height: 100px;
+            text-align: right;
+            background-image : url("../img/topCI.png");
+            background-position: right;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 <body class="body">
     <div class="vertical-align-content">
+        <!--<div class="top-ci"></div>-->
         <div class="text-content">
-            오늘 식사는
+            오늘 <span class="text-content-bold">식사</span>는
         </div>
         <div class="text-content">
             <a href="https://place.map.kakao.com/24725293">'이문설농탕'</a>
