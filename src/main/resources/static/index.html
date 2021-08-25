@@ -69,9 +69,12 @@
                         background-color: #F6AC17
                     }
                     .vertical-align-content {
-                        height: 350px;
+                        /*height: 350px;*/
                         padding: 70px 0;
                         /*background-color: aqua;*/
+                        background-image: url("./img/bg.png");
+                        background-position: center;
+                        background-repeat: no-repeat;
                     }
                     .text-content {
                         font-size: 2.5em;
@@ -81,12 +84,16 @@
                         text-align: center;
                         /*background-color: green;*/
                     }
+                    .text-content-bold {
+                        font-size: 1.5em;
+                        font-weight: bolder;
+                    }
                 </style>
 
                 <body class="body">
                     <div class="vertical-align-content">
                         <div class="text-content">
-                            오늘 식사는
+                            오늘 <span class="text-content-bold">식사</span>는
                         </div>
                         <div class="text-content">
                             <a href=${placeUrl}>'${placeName}'</a>
