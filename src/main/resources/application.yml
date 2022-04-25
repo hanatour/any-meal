@@ -1,5 +1,13 @@
 spring.devtools.livereload.enabled: true
 spring.freemarker.cache: false
+server:
+  port: 8080
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: "%a %{X-Forwarded-For}i %u %t \"%r\" %s %b %Dms"
+      directory: ./logs/
+    basedir: .
 
 logging:
   file:
