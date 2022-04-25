@@ -1,0 +1,4 @@
+spring.devtools.livereload.enabled: true
+spring.freemarker.cache: false
+
+logging.file.path: ./logs

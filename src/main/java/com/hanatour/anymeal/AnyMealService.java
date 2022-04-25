@@ -3,6 +3,7 @@ package com.hanatour.anymeal;
 import com.hanatour.anymeal.geocalc.Coordinate;
 import com.hanatour.anymeal.geocalc.EarthCalc;
 import com.hanatour.anymeal.geocalc.Point;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class AnyMealService {
   private static SecureRandom secureRandom;
   static {
@@ -51,9 +53,8 @@ public class AnyMealService {
                     .parallel()
                     .flatMap(p -> getRestaurantNearAllPages(p, "distance", 500, "FD6", 1).stream())
                     .distinct()
-                    .peek(System.out::println)
                     .collect(Collectors.toList());
-    System.out.println(restaurants.size());
+    log.debug("getRestaurantNear restaurants: {}", restaurants);
     if (restaurants.size() > 1) {
       int index = Math.abs(secureRandom.nextInt()) % restaurants.size();
       return Optional.of(restaurants.get(index));

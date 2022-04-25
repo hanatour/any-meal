@@ -31,14 +31,15 @@
  */
 
 package com.hanatour.anymeal.geocalc;
-import lombok.val;
-import lombok.var;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.floor;
+import static java.lang.Math.toRadians;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import static java.lang.Math.*;
+import lombok.val;
 
 /**
  * Abstraction of coordinate systems (degrees, radians, dms and gps)

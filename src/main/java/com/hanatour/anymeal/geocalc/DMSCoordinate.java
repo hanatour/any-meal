@@ -32,10 +32,10 @@
 
 package com.hanatour.anymeal.geocalc;
 
+import static java.lang.Math.abs;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.var;
-import static java.lang.Math.abs;
 
 /**
  * Represents coordinates given in
