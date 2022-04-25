@@ -1,4 +1,13 @@
 spring.devtools.livereload.enabled: true
 spring.freemarker.cache: false
 
-logging.file.path: ./logs
+logging:
+  file:
+    name: ./logs/anymeal.log
+  level:
+    root: debug
+    com.hanatour: debug
+  logback:
+    rollingpolicy:
+      max-file-size: 500MB
+      max-history: 10
