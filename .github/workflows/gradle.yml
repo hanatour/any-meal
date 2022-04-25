@@ -28,7 +28,7 @@ jobs:
     - name: Stop service
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: kill `jps | grep any-meal | cut -d " " -f 1`
+        command: pkill -f any-meal
         host: ${{ secrets.SERVER_ADDR }}
         username: ec2-user
         privateKey: ${{ secrets.EC2_SSH_KEY}}
