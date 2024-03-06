@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Any-Meal</title>
-    
+    <link rel="icon" type="image/png" href="/favicon-32x32.png"/>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GGJ00TDHP"></script>
     <script>
@@ -20,26 +21,33 @@
 
         }
 
+        const positionOptions = {
+            enableHighAccuracy: false,
+            timeout: 50000,
+            maximumAge: 60000,
+        };
+
         //사용자 좌표 가져오기
         function geoFindMe() {
 
             function success(position) {
+                console.log(new Date().toUTCString(), 'Your location is ', position);
                 const y  = position.coords.latitude;
                 const x = position.coords.longitude;
 
                 getFunc(x, y);
             }
 
-            function error() {
-                console.log('Unable to retrieve your location');
+            function error(err) {
+                console.log(new Date().toUTCString(), 'Unable to retrieve your location', err);
                 getFunc("", "");
             }
 
             if(!navigator.geolocation) {
                 alert('Geolocation is not supported by your browser');
             } else {
-                //status.textContent = 'Locating…';
-                navigator.geolocation.getCurrentPosition(success, error);
+                console.log(new Date().toUTCString(), 'Locating…');
+                navigator.geolocation.getCurrentPosition(success, error, positionOptions);
             }
 
         }

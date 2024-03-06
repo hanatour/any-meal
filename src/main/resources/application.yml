@@ -9,6 +9,7 @@ server:
       directory: ./logs/
     basedir: .
 
+anymeal.kakao-restapi-key: # Inject by environment variable
 logging:
   file:
     name: ./logs/anymeal.log
