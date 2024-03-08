@@ -33,7 +33,7 @@ jobs:
         host: ${{ secrets.SERVER_ADDR }}
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY}}
-        script: pkill -f any-meal || true
+        script: pwd
 
     - name: Deploy to instance
       uses: easingthemes/ssh-deploy@main
