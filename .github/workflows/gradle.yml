@@ -38,7 +38,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY}}
         script: |
           ps -ef | grep java
-          pkill -o -f any-meal || true
+          PID=$(ps -ef | grep java | grep -v grep | awk '{print $2}')
+          kill $PID || true
 
     - name: Deploy to instance
       uses: easingthemes/ssh-deploy@main
