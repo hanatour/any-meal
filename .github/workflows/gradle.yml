@@ -34,6 +34,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY}}
         script: |
+          ps -ef | grep any-meal
           pkill -f any-meal-0.0.1 || true
 
     - name: Deploy to instance
