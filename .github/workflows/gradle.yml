@@ -26,26 +26,29 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build -Danymeal.kakao-restapi-key=${{ secrets.KAKAO_RESTAPI_KEY }}
+
     - name: Stop service
-      uses: garygrossgarten/github-action-ssh@release
+      uses: appleboy/ssh-action@master
       with:
-        command: pkill -f any-meal | true
         host: ${{ secrets.SERVER_ADDR }}
-        username: ec2-user
-        privateKey: ${{ secrets.EC2_SSH_KEY}}
-    - name: Deploy to my EC2 instance
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY}}
+        script: pkill -f any-meal | true
+
+    - name: Deploy to instance
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
         SOURCE: "./build/libs/"
         REMOTE_HOST: ${{ secrets.SERVER_ADDR }}
-        REMOTE_USER: "ec2-user"
-        TARGET: "/home/ec2-user/any-meal"
+        REMOTE_USER: "ubuntu"
+        TARGET: "/home/ubuntu/any-meal"
+
     - name: Start service
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_ADDR }}
-        username: ec2-user
+        username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           setsid nohup java -jar ~/any-meal/any-meal-0.0.1-SNAPSHOT.jar &>~/any-meal/any-meal.out &
