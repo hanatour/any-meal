@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 8
+    - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
@@ -25,7 +25,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -Danymeal.kakao-restapi-key=${{ secrets.KAKAO_RESTAPI_KEY }}
     - name: Stop service
       uses: garygrossgarten/github-action-ssh@release
       with:
