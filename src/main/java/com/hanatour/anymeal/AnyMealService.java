@@ -60,9 +60,13 @@ public final class AnyMealService {
             points.stream()
                 .parallel()
                 .flatMap(p -> getRestaurantNearAllPages(p, "distance", 500, "FD6", 1).stream())
+                .filter(r ->
+                    !r.getCategoryName().startsWith("음식점 > 술집") &&
+                    !r.getCategoryName().startsWith("음식점 > 간식"))
                 .distinct()
+                .peek(r -> log.debug("{} - {}", r.getCategoryName(), r.getPlaceName()))
                 .toList();
-        log.debug("getRestaurantNear restaurants: {}", restaurants);
+        log.debug("getRestaurantNear restaurants: {}", restaurants.size());
         if (restaurants.size() > 1) {
             final int index = Math.abs(secureRandom.nextInt() % restaurants.size());
             return Optional.of(restaurants.get(index));
@@ -87,6 +91,8 @@ public final class AnyMealService {
 
     public CategoryResponse getRestaurantNear(Point point, String sort, int radius,
         String categoryCode, int page) {
+        log.debug("getRestaurantNear point: {}, sort: {}, radius: {}, categoryCode: {}, page: {}",
+            point, sort, radius, categoryCode, page);
         final HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "KakaoAK " + kakaoRestapiKey);
         final HttpEntity<Void> entity = new HttpEntity<>(headers);

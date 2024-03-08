@@ -23,7 +23,7 @@ logging:
     org.hibernate: info
     org.springframework: info
     springfox: info
-    sun.rmi: info
+    sun: info
     Validator: info
   logback:
     rollingpolicy:
