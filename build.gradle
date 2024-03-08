@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.18'
+	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'java'
 }
@@ -14,12 +14,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	// For CVE
-	implementation 'org.springframework:spring-web:5.3.32'
-	implementation 'ch.qos.logback:logback-classic:1.2.13'
-	implementation 'ch.qos.logback:logback-core:1.2.13'
-	implementation 'org.yaml:snakeyaml:2.2'
 
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
