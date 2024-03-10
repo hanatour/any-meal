@@ -9,23 +9,7 @@ server:
       directory: ./logs/
     basedir: .
 
-anymeal.kakao-restapi-key: # Inject by environment variable
-logging:
-  file:
-    name: ./logs/anymeal.log
-  level:
-    root: debug
-    com.hanatour: debug
-    io.netty: info
-    javax.management: info
-    jdk.event.security: info
-    org.apache: info
-    org.hibernate: info
-    org.springframework: info
-    springfox: info
-    sun: info
-    Validator: info
-  logback:
-    rollingpolicy:
-      max-file-size: 500MB
-      max-history: 10
+anymeal:
+  kakao-restapi-key: # Inject by environment variable
+  default-longitude: "126.983618"
+  default-latitude: "37.572043"

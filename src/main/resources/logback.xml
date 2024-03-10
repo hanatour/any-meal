@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/anymeal.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/anymeal.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="LOCATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/location.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/location.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.hanatour" level="DEBUG" />
+  <logger name="location" level="DEBUG">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="LOCATION_LOG" />
+  </logger>
+
+  <logger name="io.netty" level="INFO" />
+  <logger name="javax.management" level="INFO" />
+  <logger name="jdk.event.security" level="INFO" />
+  <logger name="org.apache" level="INFO" />
+  <logger name="org.hibernate" level="INFO" />
+  <logger name="org.springframework" level="INFO" />
+  <logger name="springfox" level="INFO" />
+  <logger name="sun" level="INFO" />
+  <logger name="Validator" level="INFO" />
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+
+</configuration>

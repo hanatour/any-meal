@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnyMealController {
 
+    private final AnyMealConfig  anyMealConfig;
     private final AnyMealService anyMealService;
+    private final LogService logService;
 
-    public AnyMealController(AnyMealService anyMealService) {
+    public AnyMealController(AnyMealConfig anyMealConfig, AnyMealService anyMealService, LogService logService) {
+        this.anyMealConfig = anyMealConfig;
         this.anyMealService = anyMealService;
+        this.logService = logService;
     }
 
     @GetMapping("restaurant/near")
@@ -21,7 +25,9 @@ public class AnyMealController {
         @RequestParam(defaultValue = "126.983618") String x,
         @RequestParam(defaultValue = "37.572043") String y) {
         log.debug("getRestaurantNear x:{}, y:{}", x, y);
-        return anyMealService.getRestaurantNear(x, y);
+        final Optional<Restaurant> restaurant = anyMealService.getRestaurantNear(x, y);
+        logService.logLocation(x, y, restaurant);
+        return restaurant;
     }
 
 }
