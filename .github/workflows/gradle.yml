@@ -48,7 +48,7 @@ jobs:
         SOURCE: "./build/libs/"
         REMOTE_HOST: ${{ secrets.SERVER_ADDR }}
         REMOTE_USER: "ubuntu"
-        TARGET: "/home/ubuntu/any-meal"
+        TARGET: "/home/ubuntu/deploy"
 
     - name: Start service
       uses: appleboy/ssh-action@master
