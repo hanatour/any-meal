@@ -1,5 +1,6 @@
 package com.hanatour.anymeal;
 
+import java.net.http.HttpHeaders;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ public class AnyMealController {
     }
 
     @PostMapping("test/webhook")
-    public String testWebhook(@RequestHeader String header, @RequestBody String payload) {
-        System.out.println(header);
+    public String testWebhook(@RequestHeader HttpHeaders headers, @RequestBody String payload) {
+        System.out.println(headers);
         System.out.println("===================================================================================");
         System.out.println(payload);
         return "Ok";
