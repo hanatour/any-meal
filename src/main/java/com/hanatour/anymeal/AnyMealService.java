@@ -98,7 +98,7 @@ public final class AnyMealService {
         final HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         final String url = "https://dapi.kakao.com/v2/local/search/category.json";
-        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
             .queryParam("x", point.longitude)
             .queryParam("y", point.latitude)
             .queryParam("sort", sort)
