@@ -64,8 +64,8 @@ public final class AnyMealService {
                     !r.getCategoryName().startsWith("음식점 > 술집") &&
                     !r.getCategoryName().startsWith("음식점 > 간식"))
                 .distinct()
-                .peek(r -> log.debug("{} - {}", r.getCategoryName(), r.getPlaceName()))
                 .toList();
+        restaurants.forEach(r -> log.debug("{} - {}", r.getCategoryName(), r.getPlaceName()));
         log.debug("getRestaurantNear restaurants: {}", restaurants.size());
         if (restaurants.size() > 1) {
             final int index = Math.abs(secureRandom.nextInt() % restaurants.size());
