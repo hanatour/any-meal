@@ -11,7 +11,7 @@ public class LogService {
 
     public void logLocation(String x, String y, Optional<Restaurant> restaurant) {
         restaurant.ifPresent(r -> {
-            locationLog.info("{}|{}|{}|{}|{}", x, y, r.getId(), r.getPlaceName(), r.getAddressName());
+            locationLog.info("{}|{}|{}|{}|{}", x, y, r.id(), r.placeName(), r.addressName());
         });
     }
 }

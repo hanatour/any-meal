@@ -1,6 +1,5 @@
 package com.hanatour.anymeal;
 
-import java.net.http.HttpHeaders;
 import java.util.Map;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnyMealController {
 
-    private final AnyMealConfig  anyMealConfig;
+    private final AnyMealConfig anyMealConfig;
     private final AnyMealService anyMealService;
     private final LogService logService;
 
@@ -27,10 +26,10 @@ public class AnyMealController {
 
     @GetMapping("restaurant/near")
     public Optional<Restaurant> getRestaurantNear(
-        @RequestParam(defaultValue = "126.983618") String x,
-        @RequestParam(defaultValue = "37.572043") String y) {
+            @RequestParam(defaultValue = "126.983618") String x,
+            @RequestParam(defaultValue = "37.572043") String y) {
         log.debug("getRestaurantNear x:{}, y:{}", x, y);
-        final Optional<Restaurant> restaurant = anyMealService.getRestaurantNear(x, y);
+        final var restaurant = anyMealService.getRestaurantNear(x, y);
         logService.logLocation(x, y, restaurant);
         return restaurant;
     }

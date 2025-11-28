@@ -48,41 +48,40 @@ public final class AnyMealService {
      * @return 식당 정보
      */
     public Optional<Restaurant> getRestaurantNear(String x, String y) {
-        final Coordinate lat = Coordinate.fromDegrees(Double.parseDouble(y));
-        final Coordinate lng = Coordinate.fromDegrees(Double.parseDouble(x));
-        final Point orgPoint = Point.at(lat, lng);
-        final Point point1 = EarthCalc.gcd.pointAt(orgPoint, 0., 190.);
-        final Point point2 = EarthCalc.gcd.pointAt(orgPoint, 90., 190.);
-        final Point point3 = EarthCalc.gcd.pointAt(orgPoint, 180., 190.);
-        final Point point4 = EarthCalc.gcd.pointAt(orgPoint, 270., 190.);
-        final List<Point> points = Arrays.asList(point1, point2, point3, point4);
-        final List<Restaurant> restaurants =
-            points.stream()
+        final var lat = Coordinate.fromDegrees(Double.parseDouble(y));
+        final var lng = Coordinate.fromDegrees(Double.parseDouble(x));
+        final var orgPoint = Point.at(lat, lng);
+        final var point1 = EarthCalc.gcd.pointAt(orgPoint, 0., 190.);
+        final var point2 = EarthCalc.gcd.pointAt(orgPoint, 90., 190.);
+        final var point3 = EarthCalc.gcd.pointAt(orgPoint, 180., 190.);
+        final var point4 = EarthCalc.gcd.pointAt(orgPoint, 270., 190.);
+        final var points = Arrays.asList(point1, point2, point3, point4);
+        final var restaurants = points.stream()
                 .parallel()
                 .flatMap(p -> getRestaurantNearAllPages(p, "distance", 500, "FD6", 1).stream())
-                .filter(r ->
-                    !r.getCategoryName().startsWith("음식점 > 술집") &&
-                    !r.getCategoryName().startsWith("음식점 > 간식"))
+                .filter(r -> !r.categoryName().startsWith("음식점 > 술집") &&
+                        !r.categoryName().startsWith("음식점 > 간식"))
                 .distinct()
                 .toList();
-        restaurants.forEach(r -> log.debug("{} - {}", r.getCategoryName(), r.getPlaceName()));
+
+        restaurants.forEach(r -> log.debug("{} - {}", r.categoryName(), r.placeName()));
         log.debug("getRestaurantNear restaurants: {}", restaurants.size());
         if (restaurants.size() > 1) {
-            final int index = Math.abs(secureRandom.nextInt() % restaurants.size());
+            final var index = Math.abs(secureRandom.nextInt() % restaurants.size());
             return Optional.of(restaurants.get(index));
         }
         return restaurants.stream().findAny();
     }
 
     public List<Restaurant> getRestaurantNearAllPages(Point point, String sort, int radius,
-        String categoryCode, int page) {
-        final CategoryResponse categoryResponse = getRestaurantNear(point, sort, radius,
-            categoryCode, page);
+            String categoryCode, int page) {
+        final var categoryResponse = getRestaurantNear(point, sort, radius,
+                categoryCode, page);
         if (categoryResponse == null) {
             return Collections.emptyList();
         }
-        final List<Restaurant> restaurants = categoryResponse.getRestaurants();
-        if (Boolean.TRUE.equals(categoryResponse.getMeta().getEnd())) {
+        final var restaurants = categoryResponse.restaurants();
+        if (Boolean.TRUE.equals(categoryResponse.meta().isEnd())) {
             return restaurants;
         }
         restaurants.addAll(getRestaurantNearAllPages(point, sort, radius, categoryCode, page + 1));
@@ -90,24 +89,24 @@ public final class AnyMealService {
     }
 
     public CategoryResponse getRestaurantNear(Point point, String sort, int radius,
-        String categoryCode, int page) {
+            String categoryCode, int page) {
         log.debug("getRestaurantNear point: {}, sort: {}, radius: {}, categoryCode: {}, page: {}",
-            point, sort, radius, categoryCode, page);
-        final HttpHeaders headers = new HttpHeaders();
+                point, sort, radius, categoryCode, page);
+        final var headers = new HttpHeaders();
         headers.set("Authorization", "KakaoAK " + kakaoRestapiKey);
-        final HttpEntity<Void> entity = new HttpEntity<>(headers);
+        final var entity = new HttpEntity<>(headers);
 
-        final String url = "https://dapi.kakao.com/v2/local/search/category.json";
-        final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
-            .queryParam("x", point.longitude)
-            .queryParam("y", point.latitude)
-            .queryParam("sort", sort)
-            .queryParam("radius", radius)
-            .queryParam("category_group_code", categoryCode)
-            .queryParam("page", page);
+        final var url = "https://dapi.kakao.com/v2/local/search/category.json";
+        final var builder = UriComponentsBuilder.fromUriString(url)
+                .queryParam("x", point.longitude)
+                .queryParam("y", point.latitude)
+                .queryParam("sort", sort)
+                .queryParam("radius", radius)
+                .queryParam("category_group_code", categoryCode)
+                .queryParam("page", page);
 
-        final HttpEntity<CategoryResponse> response = restTemplate.exchange(builder.toUriString(),
-            HttpMethod.GET, entity, CategoryResponse.class);
+        final var response = restTemplate.exchange(builder.toUriString(),
+                HttpMethod.GET, entity, CategoryResponse.class);
 
         return response.getBody();
     }
