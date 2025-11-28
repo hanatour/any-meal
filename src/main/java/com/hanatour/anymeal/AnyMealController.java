@@ -18,7 +18,8 @@ public class AnyMealController {
     private final AnyMealService anyMealService;
     private final LogService logService;
 
-    public AnyMealController(AnyMealConfig anyMealConfig, AnyMealService anyMealService, LogService logService) {
+    public AnyMealController(AnyMealConfig anyMealConfig, AnyMealService anyMealService,
+        LogService logService) {
         this.anyMealConfig = anyMealConfig;
         this.anyMealService = anyMealService;
         this.logService = logService;
@@ -26,18 +27,26 @@ public class AnyMealController {
 
     @GetMapping("restaurant/near")
     public Optional<Restaurant> getRestaurantNear(
-            @RequestParam(defaultValue = "126.983618") String x,
-            @RequestParam(defaultValue = "37.572043") String y) {
+        @RequestParam(required = false) String x,
+        @RequestParam(required = false) String y) {
         log.debug("getRestaurantNear x:{}, y:{}", x, y);
+        if (x == null) {
+            x = anyMealConfig.getDefaultLongitude();
+        }
+        if (y == null) {
+            y = anyMealConfig.getDefaultLatitude();
+        }
         final var restaurant = anyMealService.getRestaurantNear(x, y);
         logService.logLocation(x, y, restaurant);
         return restaurant;
     }
 
     @PostMapping("test/webhook")
-    public String testWebhook(@RequestHeader Map<String, String> headers, @RequestBody String payload) {
+    public String testWebhook(@RequestHeader Map<String, String> headers,
+        @RequestBody String payload) {
         System.out.println(headers);
-        System.out.println("===================================================================================");
+        System.out.println(
+            "===================================================================================");
         System.out.println(payload);
         return "Ok";
     }

@@ -10,8 +10,6 @@ public class LogService {
     Logger locationLog = LoggerFactory.getLogger("location");
 
     public void logLocation(String x, String y, Optional<Restaurant> restaurant) {
-        restaurant.ifPresent(r -> {
-            locationLog.info("{}|{}|{}|{}|{}", x, y, r.id(), r.placeName(), r.addressName());
-        });
+        restaurant.ifPresent(r -> locationLog.info("{}|{}|{}|{}|{}", x, y, r.id(), r.placeName(), r.addressName()));
     }
 }
