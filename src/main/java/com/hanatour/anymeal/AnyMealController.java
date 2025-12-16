@@ -1,5 +1,6 @@
 package com.hanatour.anymeal;
 
+import io.micrometer.common.util.StringUtils;
 import java.util.Map;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +31,10 @@ public class AnyMealController {
         @RequestParam(required = false) String x,
         @RequestParam(required = false) String y) {
         log.debug("getRestaurantNear x:{}, y:{}", x, y);
-        if (x == null) {
+        if (StringUtils.isEmpty(x)) {
             x = anyMealConfig.getDefaultLongitude();
         }
-        if (y == null) {
+        if (StringUtils.isEmpty(y)) {
             y = anyMealConfig.getDefaultLatitude();
         }
         final var restaurant = anyMealService.getRestaurantNear(x, y);
