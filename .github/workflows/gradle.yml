@@ -57,7 +57,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          setsid nohup java -jar \
+          setsid nohup /home/ubuntu/.sdkman/candidates/java/current/bin/java -jar \
           -Danymeal.kakao-restapi-key=${{ secrets.KAKAO_RESTAPI_KEY }} \
           ~/deploy/any-meal-0.0.1-SNAPSHOT.jar &>~/any-meal.out &
         
