@@ -49,4 +49,22 @@ test {
     useJUnitPlatform {
         systemProperties(System.getProperties())
     }
+    // .env 파일이 있으면 테스트 JVM에 환경 변수로 전달 (로컬용, .gitignore 권장)
+    def envFile = file('.env')
+    if (envFile.exists()) {
+        envFile.readLines().each { line ->
+            line = line.trim()
+            if (line && !line.startsWith('#')) {
+                int idx = line.indexOf('=')
+                if (idx > 0) {
+                    String key = line.substring(0, idx).trim()
+                    String val = line.substring(idx + 1).trim()
+                    if (val.size() >= 2 && ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))) {
+                        val = val.substring(1, val.length() - 1)
+                    }
+                    environment key, val
+                }
+            }
+        }
+    }
 }

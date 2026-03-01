@@ -1,133 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Any-Meal</title>
     <link rel="icon" type="image/png" href="favicon-32x32.png"/>
-
+    <style type="text/css">
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
+        .body { background-color: #F6AC17; }
+        .vertical-align-content {
+            padding: 70px 0;
+            background-image: url("./img/bg.png");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .text-content {
+            font-size: 2.5em;
+            font-weight: bold;
+            line-height: 1.5em;
+            font-family: 'NanumSquare', sans-serif;
+            text-align: center;
+        }
+        .text-content-bold { font-size: 1.5em; font-weight: bolder; }
+        .location-fallback { font-size: 0.6em; color: #666; margin-top: 1em; }
+    </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GGJ00TDHP"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3GGJ00TDHP');
     </script>
-    
     <script>
-        window.onload = function () {
-            geoFindMe();
+        window.onload = function () { geoFindMe(); };
 
-        }
+        var usedDefaultLocation = false;
 
-        const positionOptions = {
+        var positionOptions = {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 300000,
         };
 
-        //사용자 좌표 가져오기
         function geoFindMe() {
-
             function success(position) {
-                console.log(new Date().toUTCString(), 'Your location is ', position);
-                const y  = position.coords.latitude;
-                const x = position.coords.longitude;
-
+                usedDefaultLocation = false;
+                var y = position.coords.latitude;
+                var x = position.coords.longitude;
                 getFunc(x, y);
             }
 
             function error(err) {
                 console.log(new Date().toUTCString(), 'Unable to retrieve your location', err);
+                usedDefaultLocation = true;
                 getFunc("", "");
             }
 
-            if(!navigator.geolocation) {
+            if (!navigator.geolocation) {
                 alert('Geolocation is not supported by your browser');
             } else {
-                console.log(new Date().toUTCString(), 'Locating…');
                 navigator.geolocation.getCurrentPosition(success, error, positionOptions);
             }
-
         }
 
         var xhr;
         function getFunc(x, y) {
-
-            var url = `/restaurant/near?x=${x}&y=${y}`;
-
+            var url = '/restaurant/near?x=' + encodeURIComponent(x) + '&y=' + encodeURIComponent(y);
             xhr = new XMLHttpRequest();
-            xhr.open("get", url, true);
-
-            xhr.onreadystatechange = function () { //폴백
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
-                    if (xhr.status === 200) { //200
-                        process();
+                    if (xhr.status === 200 || xhr.status === 204) {
+                        process(xhr.status, xhr.responseText);
                     } else {
-                        alert("요청오류 : " + xhr.status);
+                        document.getElementById('result').innerHTML =
+                            '<div class="text-content">요청 오류: ' + xhr.status + '</div>';
                     }
                 }
+            };
+            xhr.send();
+        }
+
+        function process(status, responseText) {
+            var resultEl = document.getElementById('result');
+            if (status === 204 || !responseText || responseText.trim() === '') {
+                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">추천할 식당이 없어요.</div></div>';
+                return;
             }
-
-            xhr.send(null); //get방식일때 null
-
+            var json;
+            try {
+                json = JSON.parse(responseText);
+            } catch (e) {
+                resultEl.innerHTML = '<div class="text-content">응답을 처리할 수 없어요.</div>';
+                return;
+            }
+            var placeName = json && json.place_name;
+            var placeUrl = json && json.place_url;
+            if (!placeName) {
+                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">추천할 식당이 없어요.</div></div>';
+                return;
+            }
+            var html = '<div class="vertical-align-content">' +
+                '<div class="text-content">오늘 <span class="text-content-bold">식사</span>는</div>' +
+                '<div class="text-content"><a href="' + (placeUrl || '#') + '">\'' + placeName + '\'</a></div>' +
+                '<div class="text-content">어때요?</div>' +
+                (usedDefaultLocation ? '<div class="text-content location-fallback">위치를 사용할 수 없어 기본 지역으로 추천합니다.</div>' : '') +
+                '</div>';
+            resultEl.innerHTML = html;
         }
-
-        function process() {
-            var data = xhr.responseText;
-            //alert("요청 결과 : " + data);
-            var json = JSON.parse(data);
-            var placeName = json.place_name;
-            var placeUrl = json.place_url;
-            document.write(
-                `
-                <style type="text/css">
-                    @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
-                    .body {
-                        background-color: #F6AC17
-                    }
-                    .vertical-align-content {
-                        /*height: 350px;*/
-                        padding: 70px 0;
-                        /*background-color: aqua;*/
-                        background-image: url("./img/bg.png");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                    }
-                    .text-content {
-                        font-size: 2.5em;
-                        font-weight: bold;
-                        line-height: 1.5em;
-                        font-family: 'NanumSquare', sans-serif;
-                        text-align: center;
-                        /*background-color: green;*/
-                    }
-                    .text-content-bold {
-                        font-size: 1.5em;
-                        font-weight: bolder;
-                    }
-                </style>
-
-                <body class="body">
-                    <div class="vertical-align-content">
-                        <div class="text-content">
-                            오늘 <span class="text-content-bold">식사</span>는
-                        </div>
-                        <div class="text-content">
-                            <a href=${placeUrl}>'${placeName}'</a>
-                        </div>
-                        <div class="text-content">
-                            어때요?
-                        </div>
-                    </div>
-                </body>
-                `
-            );
-        }
-
     </script>
 </head>
-<body>
+<body class="body">
+    <div id="result">
+        <div class="text-content">위치를 가져오는 중…</div>
+    </div>
 </body>
 </html>

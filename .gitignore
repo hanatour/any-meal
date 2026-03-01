@@ -36,3 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 /logs/
+
+# 로컬 환경 변수 (API 키 등, 커밋하지 않음)
+.env

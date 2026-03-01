@@ -2,8 +2,8 @@ package com.hanatour.anymeal;
 
 import io.micrometer.common.util.StringUtils;
 import java.util.Map;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +27,7 @@ public class AnyMealController {
     }
 
     @GetMapping("restaurant/near")
-    public Optional<Restaurant> getRestaurantNear(
+    public ResponseEntity<Restaurant> getRestaurantNear(
         @RequestParam(required = false) String x,
         @RequestParam(required = false) String y) {
         log.debug("getRestaurantNear x:{}, y:{}", x, y);
@@ -39,16 +39,16 @@ public class AnyMealController {
         }
         final var restaurant = anyMealService.getRestaurantNear(x, y);
         logService.logLocation(x, y, restaurant);
-        return restaurant;
+        return restaurant
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.noContent().build());
     }
 
     @PostMapping("test/webhook")
     public String testWebhook(@RequestHeader Map<String, String> headers,
         @RequestBody String payload) {
-        System.out.println(headers);
-        System.out.println(
-            "===================================================================================");
-        System.out.println(payload);
+        log.info("webhook headers: {}", headers);
+        log.debug("webhook payload: {}", payload);
         return "Ok";
     }
 }

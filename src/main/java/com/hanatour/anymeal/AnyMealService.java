@@ -34,10 +34,10 @@ public final class AnyMealService {
         }
     }
 
-    @Value("${anymeal.kakao-restapi-key}")
-    private String kakaoRestapiKey;
+    private final String kakaoRestapiKey;
 
-    private AnyMealService() {
+    public AnyMealService(@Value("${anymeal.kakao-restapi-key}") String kakaoRestapiKey) {
+        this.kakaoRestapiKey = kakaoRestapiKey;
     }
 
     private static final RestTemplate restTemplate = new RestTemplate();
