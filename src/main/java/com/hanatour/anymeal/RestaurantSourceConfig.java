@@ -10,7 +10,10 @@ public class RestaurantSourceConfig {
 
     @Bean
     public Map<String, RestaurantSearchSource> restaurantSearchSourceMap(
-            KakaoRestaurantSearchSource kakaoRestaurantSearchSource) {
-        return Map.of("kakao", kakaoRestaurantSearchSource);
+            KakaoRestaurantSearchSource kakaoRestaurantSearchSource,
+            NaverRestaurantSearchSource naverRestaurantSearchSource) {
+        return Map.of(
+                "kakao", kakaoRestaurantSearchSource,
+                "naver", naverRestaurantSearchSource);
     }
 }
