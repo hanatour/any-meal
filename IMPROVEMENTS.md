@@ -2,23 +2,27 @@
 
 AI/수동 작업 시 이 문서를 기준으로 진행하면 됩니다. 완료한 항목은 `[x]`로 표시하거나 "완료" 섹션으로 옮기세요.
 
-Last updated: 2025-03
+Last updated: 2026-03
 
 ---
 
 ## 할 일
 
-- [x] **백엔드 – AnyMealService 생성자**: `private` 무인자 생성자만 있어 Spring 주입과 맞는지 확인. 필요하면 `@Autowired` 생성자 또는 public/package-private 생성자로 정리.
-- [x] **백엔드 – 테스트 웹훅 로깅**: `AnyMealController`의 `POST /test/webhook`에서 `System.out.println` 제거 후 `log.debug` 또는 `log.info`로 변경.
-- [x] **API – 빈 추천 응답 처리**: `GET /restaurant/near`가 추천 없을 때(Optional empty) 응답 규칙 정하기(204/404 또는 빈 JSON). README 또는 API 설명에 명시.
-- [x] **프론트 – document.write 제거**: `index.html`의 `process()`에서 `document.write` 대신 결과를 넣을 `div`를 두고 `textContent`/`innerHTML`로 갱신하도록 변경.
-- [x] **프론트 – 빈/부분 응답 처리**: `place_name`이 없거나 응답이 비어 있을 때 "추천할 식당이 없어요" 등 안내 문구 표시.
-- [x] **프론트 – 위치 실패 안내**: 좌표를 못 가져와 기본 좌표로 요청할 때, "위치를 사용할 수 없어 기본 지역으로 추천합니다" 같은 문구 노출.
-- [x] **문서 – README 보강**: 실행 방법(포트 8080, `anymeal.kakao-restapi-key` 환경 변수), 제공 API(`GET /restaurant/near`) 한두 줄 추가.
-- [x] **테스트 – 서비스/API 검증**: Kakao 호출 모킹 후 `AnyMealService#getRestaurantNear` 또는 `GET /restaurant/near` 통합 테스트 추가 (좌표 입력 → Restaurant 1건 반환 등).
+- [ ] **네이버 지역검색 API 연동**: 네이버 지역검색 API를 이용해 업체(식당) 검색 기능 추가. 설정(`anymeal.naver-client-id`, `anymeal.naver-client-secret`) 및 서비스/컨트롤러 설계.
+- [ ] **네이버 지도 API 연동**: 네이버 지도 API를 이용한 지도 표시 또는 위치 활용 (검색 결과 연동). 프론트 또는 백엔드에서 필요한 범위 정의 후 연동.
+- [ ] **구글 API 연동**: Google Places API(또는 검색 API)를 이용한 검색 지원 추가. 설정(`anymeal.google-api-key` 등) 및 서비스 레이어 구현.
+- [ ] **다중 검색 소스 통합**: Kakao / Naver / Google 중 하나 또는 여러 소스를 조합하는 방식 설계 (예: 쿼리 파라미터 `source=kakao|naver|google`, 또는 우선순위/폴백 정책). 단일 `GET /restaurant/near` 응답 형식 유지 여부 결정.
+- [x] **문서 및 설정 보강**: README·환경 변수에 Naver/Google API 키 안내 추가. `.env.example`에 새 키 placeholder 추가.
 
 ---
 
 ## 완료
 
-*(완료한 항목은 여기로 옮기거나 체크 후 이 섹션을 비워 두세요.)*
+- **백엔드 – AnyMealService 생성자**: 생성자 주입으로 정리.
+- **백엔드 – 테스트 웹훅 로깅**: `System.out.println` 제거 후 `log` 사용.
+- **API – 빈 추천 응답 처리**: 추천 없을 때 204 No Content, README 명시.
+- **프론트 – document.write 제거**: `#result` div + innerHTML로 렌더링.
+- **프론트 – 빈/부분 응답 처리**: "추천할 식당이 없어요" 등 안내 문구.
+- **프론트 – 위치 실패 안내**: 기본 좌표 사용 시 안내 문구 노출.
+- **문서 – README 보강**: 실행 방법, API 설명 추가.
+- **테스트 – 서비스/API 검증**: AnyMealControllerTest 추가 (모킹).
