@@ -29,15 +29,16 @@ public class AnyMealController {
     @GetMapping("restaurant/near")
     public ResponseEntity<Restaurant> getRestaurantNear(
         @RequestParam(required = false) String x,
-        @RequestParam(required = false) String y) {
-        log.debug("getRestaurantNear x:{}, y:{}", x, y);
+        @RequestParam(required = false) String y,
+        @RequestParam(required = false, defaultValue = "kakao") String source) {
+        log.debug("getRestaurantNear x:{}, y:{}, source:{}", x, y, source);
         if (StringUtils.isEmpty(x)) {
             x = anyMealConfig.getDefaultLongitude();
         }
         if (StringUtils.isEmpty(y)) {
             y = anyMealConfig.getDefaultLatitude();
         }
-        final var restaurant = anyMealService.getRestaurantNear(x, y);
+        final var restaurant = anyMealService.getRestaurantNear(x, y, source);
         logService.logLocation(x, y, restaurant);
         return restaurant
             .map(ResponseEntity::ok)
