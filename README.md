@@ -106,3 +106,4 @@ Google Places API(장소 검색) 등 사용 시 **API 키**가 필요합니다.
 
 - [Google Cloud 문서 – API 키 사용](https://cloud.google.com/docs/authentication/api-keys)
 - [Places API](https://developers.google.com/maps/documentation/places/web-service)
+- **Google Maps 사용법 상세**: [docs/google-maps-api.md](docs/google-maps-api.md)
