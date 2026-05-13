@@ -11,6 +11,8 @@ repositories {
     mavenCentral()
 }
 
+def buildDate = new Date().format("yyyy-MM-dd HH:mm", TimeZone.getTimeZone('Asia/Seoul'))
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
@@ -27,6 +29,12 @@ tasks.withType(Test) {
 
 tasks.named('bootRun') {
     jvmArgs += "--enable-preview"
+}
+
+tasks.named('processResources') {
+    filesMatching('static/index.html') {
+        expand(buildDate: buildDate)
+    }
 }
 
 dependencies {
