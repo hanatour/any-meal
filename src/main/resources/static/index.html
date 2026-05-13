@@ -23,6 +23,18 @@
         .text-content-bold { font-size: 1.5em; font-weight: bolder; }
         .location-fallback { font-size: 0.6em; color: #666; margin-top: 1em; }
         #map { width: 100%; height: 280px; margin-top: 1em; border: 0; border-radius: 8px; }
+        .build-date {
+            position: fixed;
+            right: 12px;
+            bottom: 10px;
+            font-size: 11px;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.45);
+            font-family: 'NanumSquare', sans-serif;
+            pointer-events: none;
+            z-index: 10;
+            user-select: none;
+        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GGJ00TDHP"></script>
@@ -103,7 +115,7 @@
             }
             var html = '<div class="vertical-align-content">' +
                 '<div class="text-content">오늘 <span class="text-content-bold">식사</span>는</div>' +
-                '<div class="text-content"><a href="' + (placeUrl || '#') + '">\'' + placeName + '\'</a></div>' +
+                '<div class="text-content"><a href="' + (placeUrl || '#') + '">&quot;' + placeName + '&quot;</a></div>' +
                 '<div class="text-content">어때요?</div>' +
                 (usedDefaultLocation ? '<div class="text-content location-fallback">위치를 사용할 수 없어 기본 지역으로 추천합니다.</div>' : '') +
                 '</div>';
@@ -146,5 +158,6 @@
     <div id="result">
         <div class="text-content">위치를 가져오는 중…</div>
     </div>
+    <div class="build-date">build: ${buildDate}</div>
 </body>
 </html>
