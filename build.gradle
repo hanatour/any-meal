@@ -31,7 +31,13 @@ tasks.named('bootRun') {
 
 dependencies {
 
-    implementation 'org.apache.commons:commons-lang3:3.18.0'
+    implementation 'org.apache.commons:commons-lang3:3.20.0'
+
+    constraints {
+        implementation('org.apache.commons:commons-lang3:3.20.0') {
+            because 'override transitive commons-lang3 from Spring Boot plugin'
+        }
+    }
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
