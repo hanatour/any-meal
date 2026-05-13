@@ -3,6 +3,9 @@
 
 name: Java CI with Gradle
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   push:
