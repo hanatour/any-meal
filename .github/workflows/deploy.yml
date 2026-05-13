@@ -1,0 +1,56 @@
+# 배포를 수행하는 GitHub Actions 워크플로우
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build -Danymeal.kakao-restapi-key=${{ secrets.KAKAO_RESTAPI_KEY }}
+
+      - name: Stop service
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_ADDR }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            pkill -f 'any-meal-0.0.1-SNAPSHOT.jar' || true
+
+      - name: Deploy to instance
+        uses: easingthemes/ssh-deploy@v1.0.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SOURCE: "./build/libs/"
+          REMOTE_HOST: ${{ secrets.SERVER_ADDR }}
+          REMOTE_USER: "ubuntu"
+          TARGET: "/home/ubuntu/deploy"
+
+      - name: Start service
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_ADDR }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            setsid nohup /home/ubuntu/.sdkman/candidates/java/current/bin/java -jar \
+            -Danymeal.kakao-restapi-key=${{ secrets.KAKAO_RESTAPI_KEY }} \
+            ~/deploy/any-meal-0.0.1-SNAPSHOT.jar &>~/any-meal.out &
