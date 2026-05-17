@@ -10,3 +10,4 @@
 - GEO work should focus on clearer service wording, `WebApplication` schema, and a small FAQ section rather than expanding behavior.
 - GEO items are now implemented in the homepage and README, and summarized in `docs/geo-summary.md`.
 - FAQ was split into a dedicated page (`/faq.html`) to improve discoverability and make the homepage lighter.
+- FAQ wording now reflects the service philosophy, random recommendation behavior, location-denied fallback, and no-storage policy.

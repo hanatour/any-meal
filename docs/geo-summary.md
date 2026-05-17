@@ -5,6 +5,7 @@
 - `WebApplication` JSON-LD 추가.
 - FAQ 페이지를 별도로 분리하고 홈에서 링크 제공.
 - FAQ 페이지에 `FAQPage` JSON-LD 추가.
+- FAQ 답변을 서비스 철학, 랜덤성, 위치 권한, 개인정보 비저장 기준으로 정리.
 - README 첫 문단을 서비스 정의 중심으로 수정.
 
 ## 목적
