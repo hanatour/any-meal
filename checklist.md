@@ -7,3 +7,10 @@
 - [x] Verify `robots.txt` and sitemap generation
 - [x] Check mobile, performance, and image delivery for SEO impact
 - [ ] Validate with browser view source and search preview checks
+
+## GEO
+- [x] Strengthen homepage wording for AI understanding
+- [x] Add `WebApplication` JSON-LD if appropriate
+- [x] Add an FAQ section for common user questions
+- [x] Clarify service description in `README.md`
+- [x] Keep a concise GEO summary document up to date

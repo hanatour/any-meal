@@ -20,10 +20,12 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
+      "@type": "WebApplication",
       "name": "Any-Meal",
       "url": "https://anymeal.net/",
-      "description": "현재 위치를 기반으로 근처 식당 한 곳을 랜덤으로 추천하는 Any-Meal 웹 앱입니다."
+      "description": "현재 위치를 기반으로 근처 식당 한 곳을 추천하는 웹 앱입니다.",
+      "applicationCategory": "FoodAndDrinkApplication",
+      "operatingSystem": "Web"
     }
     </script>
     <style type="text/css">
@@ -57,6 +59,24 @@
             z-index: 10;
             user-select: none;
         }
+        .faq {
+            margin: 24px auto 0;
+            max-width: 720px;
+            padding: 0 16px 24px;
+            font-family: 'NanumSquare', sans-serif;
+            color: rgba(0, 0, 0, 0.72);
+        }
+        .faq h2 {
+            font-size: 1.1em;
+            margin: 0 0 8px;
+        }
+        .faq-item {
+            margin-top: 8px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .faq-item strong { display: block; margin-bottom: 2px; }
+    </style>
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GGJ00TDHP"></script>
@@ -179,7 +199,19 @@
 <body class="body">
     <div id="result">
         <div class="text-content">위치를 가져오는 중…</div>
+        <div class="text-content location-fallback">Any-Meal은 현재 위치를 기준으로 근처 식당 한 곳을 추천합니다.</div>
     </div>
+    <section class="faq" aria-label="자주 묻는 질문">
+        <h2>자주 묻는 질문</h2>
+        <div class="faq-item">
+            <strong>Q. Any-Meal은 무엇을 하나요?</strong>
+            <span>A. 현재 위치를 기준으로 근처 식당 한 곳을 추천합니다.</span>
+        </div>
+        <div class="faq-item">
+            <strong>Q. 위치를 사용할 수 없으면 어떻게 되나요?</strong>
+            <span>A. 기본 지역 기준으로 식당을 추천합니다.</span>
+        </div>
+    </section>
     <div class="build-date">build: ${buildDate}</div>
 </body>
 </html>

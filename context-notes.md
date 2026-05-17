@@ -7,3 +7,5 @@
 - Added basic metadata to the homepage, then created `robots.txt` and `sitemap.xml` for crawlability.
 - Canonical and sitemap now use the confirmed production domain `https://anymeal.net/`.
 - Verification still needed after deployment via source inspection and shared-link previews.
+- GEO work should focus on clearer service wording, `WebApplication` schema, and a small FAQ section rather than expanding behavior.
+- GEO items are now implemented in the homepage and README, and summarized in `docs/geo-summary.md`.
