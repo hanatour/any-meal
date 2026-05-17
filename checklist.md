@@ -3,7 +3,7 @@
 - [x] Add or improve page-level `<title>` and description tags
 - [x] Add Open Graph and Twitter card metadata
 - [x] Add canonical URLs where needed
-- [ ] Add structured data (JSON-LD) for key pages if applicable
+- [x] Add structured data (JSON-LD) for key pages if applicable
 - [x] Verify `robots.txt` and sitemap generation
-- [ ] Check mobile, performance, and image delivery for SEO impact
+- [x] Check mobile, performance, and image delivery for SEO impact
 - [ ] Validate with browser view source and search preview checks
