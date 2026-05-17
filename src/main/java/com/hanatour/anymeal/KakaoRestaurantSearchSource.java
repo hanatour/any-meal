@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,17 +22,8 @@ import java.util.Optional;
 @Component
 public final class KakaoRestaurantSearchSource implements RestaurantSearchSource {
 
-    private static SecureRandom secureRandom;
+    private static final SecureRandom secureRandom = new SecureRandom();
     private static final RestTemplate restTemplate = new RestTemplate();
-
-    static {
-        try {
-            secureRandom = SecureRandom.getInstanceStrong();
-        } catch (NoSuchAlgorithmException e) {
-            log.error("SecureRandom.getInstanceStrong()", e);
-            secureRandom = new SecureRandom();
-        }
-    }
 
     private final String kakaoRestapiKey;
 
