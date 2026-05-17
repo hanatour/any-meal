@@ -14,3 +14,5 @@
 - [x] Add an FAQ section for common user questions
 - [x] Clarify service description in `README.md`
 - [x] Keep a concise GEO summary document up to date
+- [x] Create a dedicated FAQ page and link to it from the homepage
+- [x] Add `FAQPage` JSON-LD to the FAQ page

@@ -3,7 +3,8 @@
 ## 적용한 내용
 - 홈 문구를 더 직설적으로 수정.
 - `WebApplication` JSON-LD 추가.
-- FAQ 섹션 추가.
+- FAQ 페이지를 별도로 분리하고 홈에서 링크 제공.
+- FAQ 페이지에 `FAQPage` JSON-LD 추가.
 - README 첫 문단을 서비스 정의 중심으로 수정.
 
 ## 목적

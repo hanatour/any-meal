@@ -59,23 +59,6 @@
             z-index: 10;
             user-select: none;
         }
-        .faq {
-            margin: 24px auto 0;
-            max-width: 720px;
-            padding: 0 16px 24px;
-            font-family: 'NanumSquare', sans-serif;
-            color: rgba(0, 0, 0, 0.72);
-        }
-        .faq h2 {
-            font-size: 1.1em;
-            margin: 0 0 8px;
-        }
-        .faq-item {
-            margin-top: 8px;
-            font-size: 0.95em;
-            line-height: 1.5;
-        }
-        .faq-item strong { display: block; margin-bottom: 2px; }
     </style>
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -201,17 +184,9 @@
         <div class="text-content">위치를 가져오는 중…</div>
         <div class="text-content location-fallback">Any-Meal은 현재 위치를 기준으로 근처 식당 한 곳을 추천합니다.</div>
     </div>
-    <section class="faq" aria-label="자주 묻는 질문">
-        <h2>자주 묻는 질문</h2>
-        <div class="faq-item">
-            <strong>Q. Any-Meal은 무엇을 하나요?</strong>
-            <span>A. 현재 위치를 기준으로 근처 식당 한 곳을 추천합니다.</span>
-        </div>
-        <div class="faq-item">
-            <strong>Q. 위치를 사용할 수 없으면 어떻게 되나요?</strong>
-            <span>A. 기본 지역 기준으로 식당을 추천합니다.</span>
-        </div>
-    </section>
+    <div class="text-content location-fallback" style="margin-top: 16px;">
+        <a href="/faq.html" style="display:inline-block;padding:8px 14px;border:1px solid rgba(0,0,0,0.2);border-radius:999px;color:#333;text-decoration:none;background:rgba(255,255,255,0.55);">자주 묻는 질문 보기</a>
+    </div>
     <div class="build-date">build: ${buildDate}</div>
 </body>
 </html>
