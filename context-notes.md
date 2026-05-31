@@ -19,3 +19,6 @@
 - To improve Google recommendation randomness, keep random selection in app code but expand Google candidates to 20 and jitter only the search center within 500m.
 - Language-based default source selection should use `Accept-Language`; explicit `source` query parameters must remain authoritative.
 - Coordinate-based default source selection should send locations outside South Korea to Google even when the browser language is Korean.
+- English page work should keep the existing Korean homepage as `/index.html` and add `/en.html` as the dedicated English page.
+- The root path should choose between Korean and English from the first `Accept-Language` entry, matching the backend source-selection rule already used for restaurant search.
+- `./gradlew test` verifies Korean root forwarding, English root redirecting, and the existing restaurant source selection behavior.

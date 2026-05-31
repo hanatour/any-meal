@@ -28,3 +28,9 @@
 - [x] Choose Google as the default source for non-Korean language environments
 - [x] Verify explicit `source` still overrides language-based default
 - [x] Choose Google as the default source for coordinates outside South Korea
+
+## English page
+- [x] Add a separate English landing page
+- [x] Route non-Korean browser environments to the English page
+- [x] Keep Korean browser environments on the existing Korean page
+- [x] Verify routing and static page behavior with tests

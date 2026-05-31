@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="현재 위치를 기반으로 근처 식당 한 곳을 랜덤으로 추천하는 Any-Meal 웹 앱입니다.">
+    <meta name="description" content="Any-Meal recommends one nearby restaurant at random based on your current location.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Any-Meal">
-    <meta property="og:description" content="현재 위치를 기반으로 근처 식당 한 곳을 랜덤으로 추천하는 Any-Meal 웹 앱입니다.">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:url" content="https://anymeal.net/">
+    <meta property="og:description" content="Any-Meal recommends one nearby restaurant at random based on your current location.">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://anymeal.net/en.html">
     <meta property="og:image" content="https://anymeal.net/img/topCI.png">
-    <link rel="canonical" href="https://anymeal.net/">
+    <link rel="canonical" href="https://anymeal.net/en.html">
     <link rel="alternate" hreflang="ko" href="https://anymeal.net/">
     <link rel="alternate" hreflang="en" href="https://anymeal.net/en.html">
     <link rel="alternate" hreflang="x-default" href="https://anymeal.net/en.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://anymeal.net/img/topCI.png">
     <meta name="twitter:title" content="Any-Meal">
-    <meta name="twitter:description" content="현재 위치를 기반으로 근처 식당 한 곳을 랜덤으로 추천하는 Any-Meal 웹 앱입니다.">
-    <title>Any-Meal | 근처 식당 추천</title>
+    <meta name="twitter:description" content="Any-Meal recommends one nearby restaurant at random based on your current location.">
+    <title>Any-Meal | Nearby Restaurant Recommendation</title>
     <link rel="icon" type="image/png" href="favicon-32x32.png"/>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Any-Meal",
-      "url": "https://anymeal.net/",
-      "description": "현재 위치를 기반으로 근처 식당 한 곳을 추천하는 웹 앱입니다.",
+      "url": "https://anymeal.net/en.html",
+      "description": "Any-Meal recommends one nearby restaurant at random based on your current location.",
       "applicationCategory": "FoodAndDrinkApplication",
-      "operatingSystem": "Web"
+      "operatingSystem": "Web",
+      "inLanguage": "en"
     }
     </script>
     <style type="text/css">
@@ -44,7 +45,7 @@
             font-size: 2.5em;
             font-weight: bold;
             line-height: 1.5em;
-            font-family: 'NanumSquare', sans-serif;
+            font-family: 'NanumSquare', Arial, sans-serif;
             text-align: center;
         }
         .text-content-bold { font-size: 1.5em; font-weight: bolder; }
@@ -57,12 +58,11 @@
             font-size: 11px;
             line-height: 1;
             color: rgba(0, 0, 0, 0.45);
-            font-family: 'NanumSquare', sans-serif;
+            font-family: 'NanumSquare', Arial, sans-serif;
             pointer-events: none;
             z-index: 10;
             user-select: none;
         }
-    </style>
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GGJ00TDHP"></script>
@@ -115,7 +115,7 @@
                         process(xhr.status, xhr.responseText);
                     } else {
                         document.getElementById('result').innerHTML =
-                            '<div class="text-content">요청 오류: ' + xhr.status + '</div>';
+                            '<div class="text-content">Request failed: ' + xhr.status + '</div>';
                     }
                 }
             };
@@ -125,27 +125,27 @@
         function process(status, responseText) {
             var resultEl = document.getElementById('result');
             if (status === 204 || !responseText || responseText.trim() === '') {
-                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">추천할 식당이 없어요.</div></div>';
+                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">No nearby restaurant found.</div></div>';
                 return;
             }
             var json;
             try {
                 json = JSON.parse(responseText);
             } catch (e) {
-                resultEl.innerHTML = '<div class="text-content">응답을 처리할 수 없어요.</div>';
+                resultEl.innerHTML = '<div class="text-content">We could not process the response.</div>';
                 return;
             }
             var placeName = json && json.place_name;
             var placeUrl = json && json.place_url;
             if (!placeName) {
-                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">추천할 식당이 없어요.</div></div>';
+                resultEl.innerHTML = '<div class="vertical-align-content"><div class="text-content">No nearby restaurant found.</div></div>';
                 return;
             }
             var html = '<div class="vertical-align-content">' +
-                '<div class="text-content">오늘 <span class="text-content-bold">식사</span>는</div>' +
+                '<div class="text-content">How about</div>' +
                 '<div class="text-content"><a href="' + (placeUrl || '#') + '">&quot;' + placeName + '&quot;</a></div>' +
-                '<div class="text-content">어때요?</div>' +
-                (usedDefaultLocation ? '<div class="text-content location-fallback">위치를 사용할 수 없어 기본 지역으로 추천합니다.</div>' : '') +
+                '<div class="text-content">for your <span class="text-content-bold">meal</span> today?</div>' +
+                (usedDefaultLocation ? '<div class="text-content location-fallback">Location is unavailable, so we used the default area.</div>' : '') +
                 '</div>';
             resultEl.innerHTML = html;
             showMapIfAvailable(resultEl, json);
@@ -184,11 +184,11 @@
 </head>
 <body class="body">
     <div id="result">
-        <div class="text-content">위치를 가져오는 중…</div>
-        <div class="text-content location-fallback">Any-Meal은 현재 위치를 기준으로 근처 식당 한 곳을 추천합니다.</div>
+        <div class="text-content">Getting your location...</div>
+        <div class="text-content location-fallback">Any-Meal recommends one nearby restaurant based on your current location.</div>
     </div>
     <div class="text-content location-fallback" style="margin-top: 16px;">
-        <a href="/faq.html" style="display:inline-block;padding:8px 14px;border:1px solid rgba(0,0,0,0.2);border-radius:999px;color:#333;text-decoration:none;background:rgba(255,255,255,0.55);">자주 묻는 질문 보기</a>
+        <a href="/index.html" style="display:inline-block;padding:8px 14px;border:1px solid rgba(0,0,0,0.2);border-radius:999px;color:#333;text-decoration:none;background:rgba(255,255,255,0.55);">한국어로 보기</a>
     </div>
     <div class="build-date">build: ${buildDate}</div>
 </body>

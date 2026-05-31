@@ -32,7 +32,7 @@ tasks.named('bootRun') {
 }
 
 tasks.named('processResources') {
-    filesMatching('static/index.html') {
+    filesMatching(['static/index.html', 'static/en.html']) {
         expand(buildDate: buildDate)
     }
 }
