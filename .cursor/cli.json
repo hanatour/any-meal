@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(./gradlew)",
+      "Shell(git)",
+      "Read(**)",
+      "Write(**)",
+      "WebFetch(*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Write(**/.env)"
+    ]
+  }
+}
