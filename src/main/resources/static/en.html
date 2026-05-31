@@ -54,6 +54,7 @@
             text-align: center;
         }
         .text-content-bold { font-size: 1.2em; font-weight: bolder; }
+        .text-content-small { font-size: 0.75em; }
         .location-fallback {
             font-size: 0.95rem;
             font-weight: 600;
@@ -163,7 +164,7 @@
             var html = '<div class="vertical-align-content">' +
                 '<div class="text-content">How about</div>' +
                 '<div class="text-content"><a href="' + (placeUrl || '#') + '">&quot;' + placeName + '&quot;</a></div>' +
-                '<div class="text-content">for your <span class="text-content-bold">meal</span> today?</div>' +
+                '<div class="text-content"><span class="text-content-small">for your</span> <span class="text-content-bold">meal</span> <span class="text-content-small">today?</span></div>' +
                 (usedDefaultLocation ? '<div class="text-content location-fallback">Location is unavailable, so we used the default area.</div>' : '') +
                 '</div>';
             resultEl.innerHTML = html;

@@ -30,3 +30,4 @@
 - `./gradlew test --rerun-tasks` passed after adding the New York integration test.
 - English copy is longer than Korean copy, so reusing the Korean `2.5em` display size makes the English page feel oversized; keep changes scoped to `en.html`.
 - English page typography now uses a smaller display size, lower bold emphasis, fixed max content width, and smaller helper text; local `/en.html` returned 200 with the updated CSS.
+- In the English recommendation sentence, keep `meal` as the emphasis and make the surrounding `for your` / `today?` text smaller.

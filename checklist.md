@@ -50,3 +50,4 @@
 - [x] Compare English page font scale against the Korean page
 - [x] Adjust English-only typography so longer English copy fits better
 - [x] Verify the static page renders without breaking resource processing
+- [x] Reduce the supporting "for your" and "today?" text around the meal emphasis
