@@ -51,3 +51,10 @@
 - [x] Adjust English-only typography so longer English copy fits better
 - [x] Verify the static page renders without breaking resource processing
 - [x] Reduce the supporting "for your" and "today?" text around the meal emphasis
+
+## Codebase audit 2026-06-01
+- [x] Map the project structure and runtime dependencies
+- [x] Inspect controller, service, and search-source behavior for correctness risks
+- [x] Inspect frontend/static resources for maintainability and user-facing risks
+- [x] Review existing tests and run the relevant test suite
+- [x] Summarize prioritized improvement candidates with evidence

@@ -31,3 +31,10 @@
 - English copy is longer than Korean copy, so reusing the Korean `2.5em` display size makes the English page feel oversized; keep changes scoped to `en.html`.
 - English page typography now uses a smaller display size, lower bold emphasis, fixed max content width, and smaller helper text; local `/en.html` returned 200 with the updated CSS.
 - In the English recommendation sentence, keep `meal` as the emphasis and make the surrounding `for your` / `today?` text smaller.
+- 2026-06-01 codebase audit assumption: no code changes requested yet; success means identifying concrete, prioritized improvement opportunities with file references and verification status.
+- Audit plan: read build and configuration first, inspect controller/service/search-source flow, inspect static frontend behavior, run the existing test suite, then produce a short improvement list.
+- Keep audit findings tied to observable code, not speculative rewrites.
+- 2026-06-01 audit verification: `./gradlew test --rerun-tasks` passed with 20 tests, 0 failures, 0 skipped.
+- `/log` was checked by running `./gradlew bootRun` and `curl -i http://localhost:8080/log`; it returns HTTP 200 with an empty body.
+- High-priority audit findings: privacy copy conflicts with coordinate/access logging, Naver search ignores request coordinates, Kakao source can throw on missing/invalid input, and static pages interpolate API response values with `innerHTML`.
+- Medium-priority audit findings: static HTML/JS is duplicated across Korean and English pages, `index.html` has a duplicate closing `</style>`, and tests do not cover Naver mapping or the `/log` endpoint.
