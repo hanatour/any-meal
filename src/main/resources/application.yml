@@ -11,5 +11,6 @@ server:
 
 anymeal:
   kakao-restapi-key: # Inject by environment variable
+  google-api-key: # Inject by environment variable
   default-longitude: "126.983618"
   default-latitude: "37.572043"

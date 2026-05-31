@@ -104,6 +104,8 @@ Google Places API(장소 검색) 등 사용 시 **API 키**가 필요합니다.
 5. **제한 설정 (권장)**  
    생성한 API 키에서 **애플리케이션 제한**, **API 제한**을 설정해 보안을 강화하는 것을 권장합니다.
 
+이 프로젝트에서는 `source=google`로 서버 측 장소 검색을 사용할 수 있습니다. `anymeal.google-api-key`가 설정돼 있어야 동작합니다.
+
 - [Google Cloud 문서 – API 키 사용](https://cloud.google.com/docs/authentication/api-keys)
 - [Places API](https://developers.google.com/maps/documentation/places/web-service)
 - **Google Maps 사용법 상세**: [docs/google-maps-api.md](docs/google-maps-api.md)

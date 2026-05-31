@@ -49,6 +49,26 @@ class AnyMealServiceTest {
     }
 
     @Test
+    @DisplayName("google 소스가 폴백 순서에 포함되면 마지막 후보로 시도한다")
+    void getRestaurantNear_fallbackToGoogleSource() {
+        RestaurantSearchSource kakao = mock(RestaurantSearchSource.class);
+        RestaurantSearchSource naver = mock(RestaurantSearchSource.class);
+        RestaurantSearchSource google = mock(RestaurantSearchSource.class);
+        when(kakao.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
+        when(naver.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
+        Restaurant fromGoogle = new Restaurant(
+            "addr", null, "음식점", null, null, "3", null, "구글식당", null, null, "127.0", "37.5", "google");
+        when(google.searchNear(anyString(), anyString())).thenReturn(Optional.of(fromGoogle));
+
+        AnyMealService service = new AnyMealService(Map.of("kakao", kakao, "naver", naver, "google", google));
+        Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "kakao,naver,google");
+
+        assertTrue(result.isPresent());
+        assertEquals("구글식당", result.get().placeName());
+        assertEquals("google", result.get().source());
+    }
+
+    @Test
     @DisplayName("모든 소스가 비어 있으면 empty 반환")
     void getRestaurantNear_returnsEmpty_whenAllEmpty() {
         RestaurantSearchSource kakao = mock(RestaurantSearchSource.class);

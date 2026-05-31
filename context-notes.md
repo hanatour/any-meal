@@ -11,3 +11,11 @@
 - GEO items are now implemented in the homepage and README, and summarized in `docs/geo-summary.md`.
 - FAQ was split into a dedicated page (`/faq.html`) to improve discoverability and make the homepage lighter.
 - FAQ wording now reflects the service philosophy, random recommendation behavior, location-denied fallback, and no-storage policy.
+- Google support is being added as a server-side restaurant search source only.
+- The Google implementation uses Places API Nearby Search (New) and skips when `anymeal.google-api-key` is blank.
+- Integration testing is gated on `ANYMEAL_GOOGLE_API_KEY` so local CI remains safe without a key.
+- Google integration verification should use `ANYMEAL_GOOGLE_API_KEY` from `.env`; do not hardcode real API keys in tests.
+- Real Google Places responses return `primaryTypeDisplayName` as a localized text object, not a plain string.
+- To improve Google recommendation randomness, keep random selection in app code but expand Google candidates to 20 and jitter only the search center within 500m.
+- Language-based default source selection should use `Accept-Language`; explicit `source` query parameters must remain authoritative.
+- Coordinate-based default source selection should send locations outside South Korea to Google even when the browser language is Korean.
