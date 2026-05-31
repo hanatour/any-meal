@@ -40,3 +40,8 @@
 - [x] Pass the preferred language through restaurant source selection
 - [x] Send Google Places `languageCode` with Nearby Search requests
 - [x] Verify controller, service, and Google request behavior with tests
+
+## New York location verification
+- [x] Verify New York coordinates choose Google even with Korean browser language
+- [x] Run the full Gradle test suite
+- [x] Confirm whether the Google integration test produced a real API result or was skipped by missing credentials

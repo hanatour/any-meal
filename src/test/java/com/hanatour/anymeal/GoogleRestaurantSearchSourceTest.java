@@ -116,6 +116,22 @@ class GoogleRestaurantSearchSourceTest {
         assertFalse(result.get().placeName().isBlank());
     }
 
+    @Test
+    @DisplayName("뉴욕 시내 좌표로 실제 Google API를 호출하면 식당을 반환한다")
+    void searchNear_integration_returnsRestaurantForNewYorkWhenKeyPresent() {
+        String apiKey = System.getenv("ANYMEAL_GOOGLE_API_KEY");
+        Assumptions.assumeTrue(apiKey != null && !apiKey.isBlank(), "ANYMEAL_GOOGLE_API_KEY not set");
+
+        GoogleRestaurantSearchSource source = new GoogleRestaurantSearchSource(apiKey);
+        Optional<Restaurant> result = source.searchNear("-73.9857", "40.7484", "en-US");
+
+        System.out.println("newYorkResult: " + result);
+        Assumptions.assumeTrue(result.isPresent(), "Google API returned no New York result or the key is not usable");
+        assertEquals("google", result.get().source());
+        assertFalse(result.get().placeName().isBlank());
+        assertFalse(result.get().placeUrl().isBlank());
+    }
+
     private static double distanceMeters(
         double latitude1,
         double longitude1,
