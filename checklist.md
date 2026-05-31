@@ -45,3 +45,8 @@
 - [x] Verify New York coordinates choose Google even with Korean browser language
 - [x] Run the full Gradle test suite
 - [x] Confirm whether the Google integration test produced a real API result or was skipped by missing credentials
+
+## English page typography
+- [x] Compare English page font scale against the Korean page
+- [x] Adjust English-only typography so longer English copy fits better
+- [x] Verify the static page renders without breaking resource processing
