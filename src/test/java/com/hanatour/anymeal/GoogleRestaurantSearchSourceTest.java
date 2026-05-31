@@ -63,6 +63,7 @@ class GoogleRestaurantSearchSourceTest {
                 assertEquals("restaurant", body.get("includedTypes").get(0).asText());
                 assertEquals(20, body.get("maxResultCount").asInt());
                 assertEquals("DISTANCE", body.get("rankPreference").asText());
+                assertEquals("en-US", body.get("languageCode").asText());
                 assertEquals(500.0, body.at("/locationRestriction/circle/radius").asDouble());
                 assertTrue(distanceMeters(latitude, longitude, jitteredLatitude, jitteredLongitude) <= 500.000001);
             })
@@ -91,7 +92,7 @@ class GoogleRestaurantSearchSourceTest {
                 }
                 """, MediaType.APPLICATION_JSON));
 
-        Optional<Restaurant> result = source.searchNear(String.valueOf(longitude), String.valueOf(latitude));
+        Optional<Restaurant> result = source.searchNear(String.valueOf(longitude), String.valueOf(latitude), "en-US");
 
         assertTrue(result.isPresent());
         assertEquals("구글식당", result.get().placeName());

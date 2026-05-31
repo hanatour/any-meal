@@ -34,3 +34,9 @@
 - [x] Route non-Korean browser environments to the English page
 - [x] Keep Korean browser environments on the existing Korean page
 - [x] Verify routing and static page behavior with tests
+
+## Google request language
+- [x] Extract the browser's preferred language from `Accept-Language`
+- [x] Pass the preferred language through restaurant source selection
+- [x] Send Google Places `languageCode` with Nearby Search requests
+- [x] Verify controller, service, and Google request behavior with tests

@@ -1,6 +1,7 @@
 package com.hanatour.anymeal;
 
 import io.micrometer.common.util.StringUtils;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +41,9 @@ public class AnyMealController {
             y = anyMealConfig.getDefaultLatitude();
         }
         source = resolveSource(source, acceptLanguage, x, y);
-        log.debug("getRestaurantNear x:{}, y:{}, source:{}", x, y, source);
-        final var restaurant = anyMealService.getRestaurantNear(x, y, source);
+        String languageCode = resolveLanguageCode(acceptLanguage);
+        log.debug("getRestaurantNear x:{}, y:{}, source:{}, languageCode:{}", x, y, source, languageCode);
+        final var restaurant = anyMealService.getRestaurantNear(x, y, source, languageCode);
         logService.logLocation(x, y, restaurant);
         return restaurant
             .map(ResponseEntity::ok)
@@ -78,6 +80,27 @@ public class AnyMealController {
         }
         String firstLanguage = acceptLanguage.split(",", 2)[0].trim().toLowerCase(Locale.ROOT);
         return firstLanguage.equals("ko") || firstLanguage.startsWith("ko-");
+    }
+
+    private static String resolveLanguageCode(String acceptLanguage) {
+        if (StringUtils.isEmpty(acceptLanguage)) {
+            return Locale.KOREAN.toLanguageTag();
+        }
+        try {
+            List<Locale.LanguageRange> languageRanges = Locale.LanguageRange.parse(acceptLanguage);
+            if (!languageRanges.isEmpty()) {
+                String range = languageRanges.getFirst().getRange();
+                if (!range.equals("*")) {
+                    return Locale.forLanguageTag(range).toLanguageTag();
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            log.debug("Invalid Accept-Language header: {}", acceptLanguage);
+        }
+        String firstLanguage = acceptLanguage.split(",", 2)[0].trim();
+        return firstLanguage.isEmpty() || firstLanguage.equals("*")
+            ? Locale.KOREAN.toLanguageTag()
+            : Locale.forLanguageTag(firstLanguage).toLanguageTag();
     }
 
     @PostMapping("test/webhook")

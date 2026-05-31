@@ -29,6 +29,10 @@ public final class AnyMealService {
      * @return 식당 정보
      */
     public Optional<Restaurant> getRestaurantNear(String x, String y, String source) {
+        return getRestaurantNear(x, y, source, "");
+    }
+
+    public Optional<Restaurant> getRestaurantNear(String x, String y, String source, String languageCode) {
         if (source == null || source.isBlank()) {
             source = "kakao";
         }
@@ -46,7 +50,7 @@ public final class AnyMealService {
                 log.debug("Restaurant search source not available: {}", name);
                 continue;
             }
-            Optional<Restaurant> result = provider.searchNear(x, y);
+            Optional<Restaurant> result = provider.searchNear(x, y, languageCode);
             if (result.isPresent()) {
                 log.debug("getRestaurantNear found from source: {}", name);
                 return result;

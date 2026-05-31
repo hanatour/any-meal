@@ -55,7 +55,7 @@ class AnyMealControllerTest {
     void getRestaurantNear_returns200WithBody_whenRestaurantFound() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear(anyString(), anyString(), anyString()))
+        when(anyMealService.getRestaurantNear(anyString(), anyString(), anyString(), anyString()))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near").param("x", "127.0").param("y", "37.5"))
@@ -70,7 +70,7 @@ class AnyMealControllerTest {
     void getRestaurantNear_returns204_whenEmpty() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear(anyString(), anyString(), anyString()))
+        when(anyMealService.getRestaurantNear(anyString(), anyString(), anyString(), anyString()))
             .thenReturn(Optional.empty());
 
         mockMvc.perform(get("/restaurant/near").param("x", "127.0").param("y", "37.5"))
@@ -82,14 +82,14 @@ class AnyMealControllerTest {
     void getRestaurantNear_usesDefaultCoordinates_whenParamsMissing() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear("126.98", "37.57", "kakao"))
+        when(anyMealService.getRestaurantNear("126.98", "37.57", "kakao", "ko"))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.place_name").value("테스트식당"));
 
-        verify(anyMealService).getRestaurantNear("126.98", "37.57", "kakao");
+        verify(anyMealService).getRestaurantNear("126.98", "37.57", "kakao", "ko");
     }
 
     @Test
@@ -97,7 +97,7 @@ class AnyMealControllerTest {
     void getRestaurantNear_usesGoogleDefault_whenPreferredLanguageIsNotKorean() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear(eq("127.0"), eq("37.5"), eq("google")))
+        when(anyMealService.getRestaurantNear(eq("127.0"), eq("37.5"), eq("google"), eq("en-US")))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near")
@@ -106,7 +106,7 @@ class AnyMealControllerTest {
                 .header("Accept-Language", "en-US,en;q=0.9,ko;q=0.8"))
             .andExpect(status().isOk());
 
-        verify(anyMealService).getRestaurantNear("127.0", "37.5", "google");
+        verify(anyMealService).getRestaurantNear("127.0", "37.5", "google", "en-US");
     }
 
     @Test
@@ -114,7 +114,7 @@ class AnyMealControllerTest {
     void getRestaurantNear_usesExplicitSource_whenSourceProvided() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear(eq("127.0"), eq("37.5"), eq("kakao")))
+        when(anyMealService.getRestaurantNear(eq("127.0"), eq("37.5"), eq("kakao"), eq("en-US")))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near")
@@ -124,7 +124,7 @@ class AnyMealControllerTest {
                 .header("Accept-Language", "en-US,en;q=0.9"))
             .andExpect(status().isOk());
 
-        verify(anyMealService).getRestaurantNear("127.0", "37.5", "kakao");
+        verify(anyMealService).getRestaurantNear("127.0", "37.5", "kakao", "en-US");
     }
 
     @Test
@@ -132,7 +132,7 @@ class AnyMealControllerTest {
     void getRestaurantNear_usesGoogleDefault_whenCoordinateIsOutsideSouthKorea() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear(eq("-73.9857"), eq("40.7484"), eq("google")))
+        when(anyMealService.getRestaurantNear(eq("-73.9857"), eq("40.7484"), eq("google"), eq("ko-KR")))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near")
@@ -141,6 +141,6 @@ class AnyMealControllerTest {
                 .header("Accept-Language", "ko-KR,ko;q=0.9"))
             .andExpect(status().isOk());
 
-        verify(anyMealService).getRestaurantNear("-73.9857", "40.7484", "google");
+        verify(anyMealService).getRestaurantNear("-73.9857", "40.7484", "google", "ko-KR");
     }
 }

@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class AnyMealServiceTest {
@@ -21,7 +22,7 @@ class AnyMealServiceTest {
         Restaurant expected = new Restaurant(
             "addr", "FD6", "음식점", "한식", "100", "1", null, "테스트", "http://kakao.com/1",
             null, "127.0", "37.5", "kakao");
-        when(kakao.searchNear(anyString(), anyString())).thenReturn(Optional.of(expected));
+        when(kakao.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.of(expected));
 
         AnyMealService service = new AnyMealService(Map.of("kakao", kakao));
         Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "kakao");
@@ -36,10 +37,10 @@ class AnyMealServiceTest {
     void getRestaurantNear_fallbackToNextSource() {
         RestaurantSearchSource kakao = mock(RestaurantSearchSource.class);
         RestaurantSearchSource naver = mock(RestaurantSearchSource.class);
-        when(kakao.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
+        when(kakao.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         Restaurant fromNaver = new Restaurant(
             "addr", null, null, null, null, "2", null, "네이버식당", null, null, "127.0", "37.5", "naver");
-        when(naver.searchNear(anyString(), anyString())).thenReturn(Optional.of(fromNaver));
+        when(naver.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.of(fromNaver));
 
         AnyMealService service = new AnyMealService(Map.of("kakao", kakao, "naver", naver));
         Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "kakao,naver");
@@ -54,11 +55,11 @@ class AnyMealServiceTest {
         RestaurantSearchSource kakao = mock(RestaurantSearchSource.class);
         RestaurantSearchSource naver = mock(RestaurantSearchSource.class);
         RestaurantSearchSource google = mock(RestaurantSearchSource.class);
-        when(kakao.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
-        when(naver.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
+        when(kakao.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
+        when(naver.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         Restaurant fromGoogle = new Restaurant(
             "addr", null, "음식점", null, null, "3", null, "구글식당", null, null, "127.0", "37.5", "google");
-        when(google.searchNear(anyString(), anyString())).thenReturn(Optional.of(fromGoogle));
+        when(google.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.of(fromGoogle));
 
         AnyMealService service = new AnyMealService(Map.of("kakao", kakao, "naver", naver, "google", google));
         Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "kakao,naver,google");
@@ -72,11 +73,27 @@ class AnyMealServiceTest {
     @DisplayName("모든 소스가 비어 있으면 empty 반환")
     void getRestaurantNear_returnsEmpty_whenAllEmpty() {
         RestaurantSearchSource kakao = mock(RestaurantSearchSource.class);
-        when(kakao.searchNear(anyString(), anyString())).thenReturn(Optional.empty());
+        when(kakao.searchNear(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
 
         AnyMealService service = new AnyMealService(Map.of("kakao", kakao));
         Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "kakao");
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    @DisplayName("브라우저 언어 코드를 검색 소스에 전달한다")
+    void getRestaurantNear_passesLanguageCodeToSource() {
+        RestaurantSearchSource google = mock(RestaurantSearchSource.class);
+        Restaurant fromGoogle = new Restaurant(
+            "addr", null, "음식점", null, null, "3", null, "Google Restaurant",
+            null, null, "127.0", "37.5", "google");
+        when(google.searchNear("127.0", "37.5", "en-US")).thenReturn(Optional.of(fromGoogle));
+
+        AnyMealService service = new AnyMealService(Map.of("google", google));
+        Optional<Restaurant> result = service.getRestaurantNear("127.0", "37.5", "google", "en-US");
+
+        assertTrue(result.isPresent());
+        verify(google).searchNear("127.0", "37.5", "en-US");
     }
 }

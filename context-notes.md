@@ -22,3 +22,6 @@
 - English page work should keep the existing Korean homepage as `/index.html` and add `/en.html` as the dedicated English page.
 - The root path should choose between Korean and English from the first `Accept-Language` entry, matching the backend source-selection rule already used for restaurant search.
 - `./gradlew test` verifies Korean root forwarding, English root redirecting, and the existing restaurant source selection behavior.
+- Google Places Nearby Search (New) accepts `languageCode` in the JSON request body, so browser language should be passed as a source option instead of hardcoded in the Google source.
+- The controller normalizes the first `Accept-Language` entry to a BCP 47 language tag and defaults to `ko` when the header is missing.
+- `./gradlew test` verifies Google request language propagation through controller, service, and Google Places request body.

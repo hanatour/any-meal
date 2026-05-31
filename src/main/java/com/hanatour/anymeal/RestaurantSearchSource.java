@@ -12,4 +12,8 @@ public interface RestaurantSearchSource {
      * @return 식당 정보가 있으면 Optional에 담아 반환, 없으면 empty
      */
     Optional<Restaurant> searchNear(String x, String y);
+
+    default Optional<Restaurant> searchNear(String x, String y, String languageCode) {
+        return searchNear(x, y);
+    }
 }

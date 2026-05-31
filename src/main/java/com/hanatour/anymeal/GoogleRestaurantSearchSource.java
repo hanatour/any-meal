@@ -2,6 +2,7 @@
 package com.hanatour.anymeal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public final class GoogleRestaurantSearchSource implements RestaurantSearchSourc
 
     @Override
     public Optional<Restaurant> searchNear(String x, String y) {
+        return searchNear(x, y, "");
+    }
+
+    @Override
+    public Optional<Restaurant> searchNear(String x, String y, String languageCode) {
         if (apiKey.isEmpty()) {
             log.debug("Google API key not set, skipping");
             return Optional.empty();
@@ -61,7 +67,8 @@ public final class GoogleRestaurantSearchSource implements RestaurantSearchSourc
                         SEARCH_RADIUS_METERS
                     )
                 ),
-                RankPreference.DISTANCE
+                RankPreference.DISTANCE,
+                languageCode
             );
 
             HttpHeaders headers = new HttpHeaders();
@@ -187,7 +194,9 @@ public final class GoogleRestaurantSearchSource implements RestaurantSearchSourc
         @JsonProperty("includedTypes") List<String> includedTypes,
         @JsonProperty("maxResultCount") int maxResultCount,
         @JsonProperty("locationRestriction") LocationRestriction locationRestriction,
-        @JsonProperty("rankPreference") RankPreference rankPreference
+        @JsonProperty("rankPreference") RankPreference rankPreference,
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        @JsonProperty("languageCode") String languageCode
     ) {
     }
 
