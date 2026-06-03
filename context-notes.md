@@ -45,3 +45,7 @@
 - `/log` was checked by running `./gradlew bootRun` and `curl -i http://localhost:8080/log`; it returns HTTP 200 with an empty body.
 - High-priority audit findings: privacy copy conflicts with coordinate/access logging, Naver search ignores request coordinates, Kakao source can throw on missing/invalid input, and static pages interpolate API response values with `innerHTML`.
 - Medium-priority audit findings: static HTML/JS is duplicated across Korean and English pages, `index.html` has a duplicate closing `</style>`, and tests do not cover Naver mapping or the `/log` endpoint.
+- Root page split assumption: `/` should remain the language-negotiated entry point, but the English page content should be owned by `/en.html` instead of `/index.html`.
+- To avoid duplicate English URLs, direct `/index.html` access should redirect to `/en.html`.
+- Implemented root split by forwarding English/default `/` requests to `/en.html`, leaving Korean requests redirected to `/ko.html`, and redirecting `/index.html` to `/en.html`.
+- Updated English/Korean alternate links and sitemap so `/en.html` is the English canonical URL; `./gradlew test` passed.

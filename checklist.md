@@ -62,3 +62,10 @@
 - [x] Inspect frontend/static resources for maintainability and user-facing risks
 - [x] Review existing tests and run the relevant test suite
 - [x] Summarize prioritized improvement candidates with evidence
+
+## Root page split to en.html
+- [x] Route the root English experience through `/en.html`
+- [x] Redirect direct `/index.html` access to `/en.html`
+- [x] Update language alternates, canonical URLs, and sitemap entries
+- [x] Update routing tests for the new URL ownership
+- [x] Run the Gradle test suite

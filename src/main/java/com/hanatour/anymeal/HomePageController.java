@@ -16,12 +16,12 @@ public class HomePageController {
         if (isKoreanPreferred(acceptLanguage)) {
             return "redirect:/ko.html";
         }
-        return "forward:/index.html";
+        return "forward:/en.html";
     }
 
-    @GetMapping("/en.html")
-    public String englishAlias() {
-        return "redirect:/index.html";
+    @GetMapping("/index.html")
+    public String indexAlias() {
+        return "redirect:/en.html";
     }
 
     private static boolean isKoreanPreferred(String acceptLanguage) {

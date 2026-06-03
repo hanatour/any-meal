@@ -31,7 +31,7 @@ class HomePageControllerTest {
     void home_forwardsToEnglishPage_whenPreferredLanguageIsEnglish() throws Exception {
         mockMvc.perform(get("/").header("Accept-Language", "en-US,en;q=0.9,ko;q=0.8"))
             .andExpect(status().isOk())
-            .andExpect(forwardedUrl("/index.html"));
+            .andExpect(forwardedUrl("/en.html"));
     }
 
     @Test
@@ -39,14 +39,14 @@ class HomePageControllerTest {
     void home_forwardsToEnglishPage_whenAcceptLanguageIsMissing() throws Exception {
         mockMvc.perform(get("/"))
             .andExpect(status().isOk())
-            .andExpect(forwardedUrl("/index.html"));
+            .andExpect(forwardedUrl("/en.html"));
     }
 
     @Test
-    @DisplayName("기존 영어 별칭은 루트로 정리")
-    void englishAlias_redirectsToRoot() throws Exception {
-        mockMvc.perform(get("/en.html"))
+    @DisplayName("기존 인덱스 경로는 영어 페이지로 정리")
+    void indexAlias_redirectsToEnglishPage() throws Exception {
+        mockMvc.perform(get("/index.html"))
             .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("/index.html"));
+            .andExpect(redirectedUrl("/en.html"));
     }
 }
