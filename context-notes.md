@@ -37,6 +37,7 @@
 - Implemented the SEO switch by making `/` forward to the English `index.html`, redirecting Korean browsers to `/ko.html`, and redirecting `/en.html` back to `/`.
 - `index.html` is now the canonical English page, `ko.html` is the Korean page, and the sitemap only lists the canonical root and Korean URLs plus FAQ.
 - `./gradlew test` passed after the routing and metadata changes.
+- For the SEO default, both the home-page redirect and the restaurant lookup API now treat a missing `Accept-Language` header as English.
 - 2026-06-01 codebase audit assumption: no code changes requested yet; success means identifying concrete, prioritized improvement opportunities with file references and verification status.
 - Audit plan: read build and configuration first, inspect controller/service/search-source flow, inspect static frontend behavior, run the existing test suite, then produce a short improvement list.
 - Keep audit findings tied to observable code, not speculative rewrites.

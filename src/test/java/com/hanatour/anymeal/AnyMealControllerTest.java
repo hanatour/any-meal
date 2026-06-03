@@ -82,14 +82,14 @@ class AnyMealControllerTest {
     void getRestaurantNear_usesDefaultCoordinates_whenParamsMissing() throws Exception {
         when(anyMealConfig.getDefaultLongitude()).thenReturn("126.98");
         when(anyMealConfig.getDefaultLatitude()).thenReturn("37.57");
-        when(anyMealService.getRestaurantNear("126.98", "37.57", "kakao", "ko"))
+        when(anyMealService.getRestaurantNear("126.98", "37.57", "google", "en"))
             .thenReturn(Optional.of(sampleRestaurant()));
 
         mockMvc.perform(get("/restaurant/near"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.place_name").value("테스트식당"));
 
-        verify(anyMealService).getRestaurantNear("126.98", "37.57", "kakao", "ko");
+        verify(anyMealService).getRestaurantNear("126.98", "37.57", "google", "en");
     }
 
     @Test

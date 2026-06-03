@@ -76,7 +76,7 @@ public class AnyMealController {
 
     private static boolean isKoreanPreferred(String acceptLanguage) {
         if (StringUtils.isEmpty(acceptLanguage)) {
-            return true;
+            return false;
         }
         String firstLanguage = acceptLanguage.split(",", 2)[0].trim().toLowerCase(Locale.ROOT);
         return firstLanguage.equals("ko") || firstLanguage.startsWith("ko-");
@@ -84,7 +84,7 @@ public class AnyMealController {
 
     private static String resolveLanguageCode(String acceptLanguage) {
         if (StringUtils.isEmpty(acceptLanguage)) {
-            return Locale.KOREAN.toLanguageTag();
+            return Locale.ENGLISH.toLanguageTag();
         }
         try {
             List<Locale.LanguageRange> languageRanges = Locale.LanguageRange.parse(acceptLanguage);
@@ -99,7 +99,7 @@ public class AnyMealController {
         }
         String firstLanguage = acceptLanguage.split(",", 2)[0].trim();
         return firstLanguage.isEmpty() || firstLanguage.equals("*")
-            ? Locale.KOREAN.toLanguageTag()
+            ? Locale.ENGLISH.toLanguageTag()
             : Locale.forLanguageTag(firstLanguage).toLanguageTag();
     }
 

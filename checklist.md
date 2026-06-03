@@ -43,6 +43,7 @@
 - [x] Pass the preferred language through restaurant source selection
 - [x] Send Google Places `languageCode` with Nearby Search requests
 - [x] Verify controller, service, and Google request behavior with tests
+- [x] Default missing `Accept-Language` to English to match the root page
 
 ## New York location verification
 - [x] Verify New York coordinates choose Google even with Korean browser language
