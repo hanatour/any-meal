@@ -4,7 +4,10 @@
     <loc>https://anymeal.net/en.html</loc>
   </url>
   <url>
-    <loc>https://anymeal.net/faq.html</loc>
+    <loc>https://anymeal.net/en-faq.html</loc>
+  </url>
+  <url>
+    <loc>https://anymeal.net/ko-faq.html</loc>
   </url>
   <url>
     <loc>https://anymeal.net/ko.html</loc>

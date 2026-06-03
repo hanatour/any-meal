@@ -49,3 +49,7 @@
 - To avoid duplicate English URLs, direct `/index.html` access should redirect to `/en.html`.
 - Implemented root split by forwarding English/default `/` requests to `/en.html`, leaving Korean requests redirected to `/ko.html`, and redirecting `/index.html` to `/en.html`.
 - Updated English/Korean alternate links and sitemap so `/en.html` is the English canonical URL; `./gradlew test` passed.
+- Language-specific FAQ assumption: keep the existing `faq.html` in place for compatibility, but expose new language-specific FAQ URLs from the language-specific main pages.
+- FAQ URL choice: use `/en-faq.html` and `/ko-faq.html` so each main page has a direct same-language support page.
+- Added `/en-faq.html` and `/ko-faq.html`, linked them from `en.html` and `ko.html`, and replaced the sitemap FAQ entry with both language-specific FAQ URLs.
+- `./gradlew test` passed after adding the FAQ pages and main-page links.

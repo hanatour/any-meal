@@ -69,3 +69,10 @@
 - [x] Update language alternates, canonical URLs, and sitemap entries
 - [x] Update routing tests for the new URL ownership
 - [x] Run the Gradle test suite
+
+## Language-specific FAQ pages
+- [x] Add an English FAQ page
+- [x] Add a Korean FAQ page
+- [x] Link each main page to its matching FAQ
+- [x] Update sitemap entries for the language-specific FAQ pages
+- [x] Run the Gradle test suite
