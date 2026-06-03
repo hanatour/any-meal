@@ -34,6 +34,9 @@
 - [x] Route non-Korean browser environments to the English page
 - [x] Keep Korean browser environments on the existing Korean page
 - [x] Verify routing and static page behavior with tests
+- [x] Make the English page the default root and move Korean content to `/ko.html`
+- [x] Reconcile canonical, `hreflang`, and sitemap entries with the new language URLs
+- [x] Remove or redirect the old `/en.html` alias so it does not compete with the root URL
 
 ## Google request language
 - [x] Extract the browser's preferred language from `Accept-Language`

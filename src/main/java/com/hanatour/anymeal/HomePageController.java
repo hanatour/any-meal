@@ -14,14 +14,19 @@ public class HomePageController {
     public String home(
         @RequestHeader(value = "Accept-Language", required = false) String acceptLanguage) {
         if (isKoreanPreferred(acceptLanguage)) {
-            return "forward:/index.html";
+            return "redirect:/ko.html";
         }
-        return "redirect:/en.html";
+        return "forward:/index.html";
+    }
+
+    @GetMapping("/en.html")
+    public String englishAlias() {
+        return "redirect:/index.html";
     }
 
     private static boolean isKoreanPreferred(String acceptLanguage) {
         if (StringUtils.isEmpty(acceptLanguage)) {
-            return true;
+            return false;
         }
         String firstLanguage = acceptLanguage.split(",", 2)[0].trim().toLowerCase(Locale.ROOT);
         return firstLanguage.equals("ko") || firstLanguage.startsWith("ko-");

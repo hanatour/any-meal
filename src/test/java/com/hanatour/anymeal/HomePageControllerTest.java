@@ -19,26 +19,34 @@ class HomePageControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @DisplayName("한국어 언어 환경이면 기존 한국어 홈으로 표시")
-    void home_forwardsToKoreanPage_whenPreferredLanguageIsKorean() throws Exception {
+    @DisplayName("한국어 언어 환경이면 한국어 페이지로 이동")
+    void home_redirectsToKoreanPage_whenPreferredLanguageIsKorean() throws Exception {
         mockMvc.perform(get("/").header("Accept-Language", "ko-KR,ko;q=0.9,en;q=0.8"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/ko.html"));
+    }
+
+    @Test
+    @DisplayName("영어 언어 환경이면 영어 홈으로 표시")
+    void home_forwardsToEnglishPage_whenPreferredLanguageIsEnglish() throws Exception {
+        mockMvc.perform(get("/").header("Accept-Language", "en-US,en;q=0.9,ko;q=0.8"))
             .andExpect(status().isOk())
             .andExpect(forwardedUrl("/index.html"));
     }
 
     @Test
-    @DisplayName("영어 언어 환경이면 영어 페이지로 이동")
-    void home_redirectsToEnglishPage_whenPreferredLanguageIsEnglish() throws Exception {
-        mockMvc.perform(get("/").header("Accept-Language", "en-US,en;q=0.9,ko;q=0.8"))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("/en.html"));
-    }
-
-    @Test
-    @DisplayName("언어 헤더가 없으면 기존 한국어 홈으로 표시")
-    void home_forwardsToKoreanPage_whenAcceptLanguageIsMissing() throws Exception {
+    @DisplayName("언어 헤더가 없으면 영어 홈으로 표시")
+    void home_forwardsToEnglishPage_whenAcceptLanguageIsMissing() throws Exception {
         mockMvc.perform(get("/"))
             .andExpect(status().isOk())
             .andExpect(forwardedUrl("/index.html"));
+    }
+
+    @Test
+    @DisplayName("기존 영어 별칭은 루트로 정리")
+    void englishAlias_redirectsToRoot() throws Exception {
+        mockMvc.perform(get("/en.html"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/index.html"));
     }
 }

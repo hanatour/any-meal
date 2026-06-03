@@ -31,6 +31,12 @@
 - English copy is longer than Korean copy, so reusing the Korean `2.5em` display size makes the English page feel oversized; keep changes scoped to `en.html`.
 - English page typography now uses a smaller display size, lower bold emphasis, fixed max content width, and smaller helper text; local `/en.html` returned 200 with the updated CSS.
 - In the English recommendation sentence, keep `meal` as the emphasis and make the surrounding `for your` / `today?` text smaller.
+- The next SEO pass should make English the root experience, move Korean content to `/ko.html`, and update canonical and `hreflang` pairs so each language has one preferred URL.
+- The root language switch should default to English when `Accept-Language` is missing or non-Korean, since that is now the SEO default.
+- Old `/en.html` references should stop being the primary entry point so search engines do not split signals across multiple English URLs.
+- Implemented the SEO switch by making `/` forward to the English `index.html`, redirecting Korean browsers to `/ko.html`, and redirecting `/en.html` back to `/`.
+- `index.html` is now the canonical English page, `ko.html` is the Korean page, and the sitemap only lists the canonical root and Korean URLs plus FAQ.
+- `./gradlew test` passed after the routing and metadata changes.
 - 2026-06-01 codebase audit assumption: no code changes requested yet; success means identifying concrete, prioritized improvement opportunities with file references and verification status.
 - Audit plan: read build and configuration first, inspect controller/service/search-source flow, inspect static frontend behavior, run the existing test suite, then produce a short improvement list.
 - Keep audit findings tied to observable code, not speculative rewrites.
