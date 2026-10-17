@@ -82,3 +82,14 @@
 - [x] Check resolved versions against current security advisories
 - [x] Apply the smallest safe dependency updates
 - [x] Run the Gradle test suite and summarize any remaining findings
+
+## Gradle wrapper update 2026-10-17
+- [x] Check the current wrapper version and official stable release
+- [x] Update the wrapper distribution URL to Gradle 9.8.1
+- [x] Run the Gradle test suite
+
+## Spring Boot 4 upgrade 2026-10-17
+- [x] Confirm the current stable Spring Boot 4 release and migration requirements
+- [x] Upgrade the Spring Boot plugin and align dependencies/starter names
+- [x] Resolve compilation and application/test failures caused by the major upgrade
+- [x] Run the Gradle test suite and record the result
