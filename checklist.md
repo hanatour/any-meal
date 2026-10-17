@@ -100,3 +100,8 @@
 - [x] Apply minimal fixes for confirmed findings
 - [x] Run the Gradle test suite and build after changes
 - [x] Record unresolved risks and verification results
+
+## Dependabot follow-up 2026-10-17
+- [x] Upgrade Jackson 3 to 3.1.7 for open Dependabot advisories
+- [x] Confirm the Commons Lang 3.20.0 alert is stale or resolve the mismatch
+- [x] Run tests/build and push the follow-up fix

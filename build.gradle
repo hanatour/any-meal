@@ -10,6 +10,7 @@ version = '0.0.1-SNAPSHOT'
 ext['log4j2.version'] = '2.25.5'
 ext['logback.version'] = '1.5.38'
 ext['tomcat.version'] = '11.0.26'
+ext['jackson-bom.version'] = '3.1.7'
 
 repositories {
     mavenCentral()
