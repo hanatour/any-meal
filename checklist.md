@@ -106,4 +106,4 @@
 - [x] Inspect Gradle plugin classpath reported by GitHub's dependency SBOM
 - [x] Override vulnerable plugin transitive Jackson and Commons Lang versions
 - [x] Run the Gradle build
-- [ ] Push plugin classpath remediation and verify GitHub alerts/SBOM
+- [x] Push plugin classpath remediation and verify GitHub alerts/SBOM
