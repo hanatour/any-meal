@@ -1,8 +1,8 @@
 // Google Places 주변 검색 소스의 매핑과 호출 조건을 검증하는 테스트
 package com.hanatour.anymeal;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
