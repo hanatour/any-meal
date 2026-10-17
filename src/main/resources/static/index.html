@@ -163,12 +163,27 @@
             }
             var html = '<div class="vertical-align-content">' +
                 '<div class="text-content">How about</div>' +
-                '<div class="text-content"><a href="' + (placeUrl || '#') + '">&quot;' + placeName + '&quot;</a></div>' +
+                '<div class="text-content"><a href="' + safePlaceUrl(placeUrl) + '">&quot;' + escapeHtml(placeName) + '&quot;</a></div>' +
                 '<div class="text-content"><span class="text-content-small">for your</span> <span class="text-content-bold">meal</span> <span class="text-content-small">today?</span></div>' +
                 (usedDefaultLocation ? '<div class="text-content location-fallback">Location is unavailable, so we used the default area.</div>' : '') +
                 '</div>';
             resultEl.innerHTML = html;
             showMapIfAvailable(resultEl, json);
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, function (char) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+            });
+        }
+
+        function safePlaceUrl(value) {
+            try {
+                var url = new URL(value, window.location.origin);
+                return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '#';
+            } catch (e) {
+                return '#';
+            }
         }
 
         function showMapIfAvailable(container, json) {

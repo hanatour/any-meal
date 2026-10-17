@@ -29,9 +29,6 @@ class AnyMealControllerTest {
     @MockitoBean
     AnyMealService anyMealService;
 
-    @MockitoBean
-    LogService logService;
-
     private static Restaurant sampleRestaurant() {
         return new Restaurant(
             "서울 강남구",

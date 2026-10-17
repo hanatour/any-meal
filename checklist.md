@@ -93,3 +93,10 @@
 - [x] Upgrade the Spring Boot plugin and align dependencies/starter names
 - [x] Resolve compilation and application/test failures caused by the major upgrade
 - [x] Run the Gradle test suite and record the result
+
+## Security audit and remediation 2026-10-17
+- [x] Inspect resolved Gradle runtime and test dependencies against current vulnerability advisories
+- [x] Review application code and configuration for concrete security weaknesses
+- [x] Apply minimal fixes for confirmed findings
+- [x] Run the Gradle test suite and build after changes
+- [x] Record unresolved risks and verification results

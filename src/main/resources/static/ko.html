@@ -142,12 +142,27 @@
             }
             var html = '<div class="vertical-align-content">' +
                 '<div class="text-content">오늘 <span class="text-content-bold">식사</span>는</div>' +
-                '<div class="text-content"><a href="' + (placeUrl || '#') + '">&quot;' + placeName + '&quot;</a></div>' +
+                '<div class="text-content"><a href="' + safePlaceUrl(placeUrl) + '">&quot;' + escapeHtml(placeName) + '&quot;</a></div>' +
                 '<div class="text-content">어때요?</div>' +
                 (usedDefaultLocation ? '<div class="text-content location-fallback">위치를 사용할 수 없어 기본 지역으로 추천합니다.</div>' : '') +
                 '</div>';
             resultEl.innerHTML = html;
             showMapIfAvailable(resultEl, json);
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, function (char) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+            });
+        }
+
+        function safePlaceUrl(value) {
+            try {
+                var url = new URL(value, window.location.origin);
+                return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '#';
+            } catch (e) {
+                return '#';
+            }
         }
 
         function showMapIfAvailable(container, json) {
