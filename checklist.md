@@ -76,3 +76,9 @@
 - [x] Link each main page to its matching FAQ
 - [x] Update sitemap entries for the language-specific FAQ pages
 - [x] Run the Gradle test suite
+
+## Dependency security update 2026-10-17
+- [x] Inspect declared and resolved Gradle dependencies
+- [x] Check resolved versions against current security advisories
+- [x] Apply the smallest safe dependency updates
+- [x] Run the Gradle test suite and summarize any remaining findings

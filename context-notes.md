@@ -53,3 +53,9 @@
 - FAQ URL choice: use `/en-faq.html` and `/ko-faq.html` so each main page has a direct same-language support page.
 - Added `/en-faq.html` and `/ko-faq.html`, linked them from `en.html` and `ko.html`, and replaced the sitemap FAQ entry with both language-specific FAQ URLs.
 - `./gradlew test` passed after adding the FAQ pages and main-page links.
+- Dependency security update plan (2026-10-17): inspect Gradle declarations and resolved runtime/test graphs, compare versions with current authoritative vulnerability data, update only affected dependencies, then run the Gradle test suite.
+- Dependency security update scope: no dependency lockfiles are present; the build uses Spring Boot dependency management plus explicit Commons Lang and Lombok versions.
+- Updated Spring Boot 3.5.14 to 3.5.16 and set the managed Jackson BOM to 2.21.7, Log4j to 2.25.5, Logback to 1.5.38, and Tomcat to 10.1.60. The versions were verified in resolved runtime and test graphs; Commons Lang 3.20.0 was already current and outside the reported affected range.
+- OSV Maven batch checks on the resolved runtime and test versions found the Spring MVC 6.2.19 advisories GHSA-j9f9-w8pj-32f8 and GHSA-pc63-qcmh-9cmg. The first concerns SSE with view fragments; the second requires XsltView and a catch-all view-rendering mapping. Source inspection found no SSE, XSLT view resolver, or catch-all view mapping. Spring Boot 3.5.16 still manages Spring Framework 6.2.19, and 6.2.20 was not a released stable version during this audit, so this remains a tracked residual rather than switching the app to a major Spring Boot line as part of a patch update.
+- The Log4j API 2.24.3 advisory GHSA-qv9r-c865-cp47 is resolved by 2.25.5; OSV batch checks returned no advisories for the selected Jackson 2.21.7, Tomcat 10.1.60, Logback 1.5.38, Log4j 2.25.5, Commons Lang, or other checked test/runtime components.
+- `./gradlew test` passed after updates: 21 tests, 0 failures, 0 skipped.
