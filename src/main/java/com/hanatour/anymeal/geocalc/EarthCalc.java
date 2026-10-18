@@ -38,8 +38,6 @@ import static java.lang.Math.acos;
 import static java.lang.Math.asin;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 import static java.lang.Math.tan;
@@ -96,7 +94,7 @@ public class EarthCalc {
 
             //spherical law of cosines
             val sphereCos = (sin(φ1) * sin(φ2)) + (cos(φ1) * cos(φ2) * cos(Δλ));
-            val c = acos(max(min(sphereCos, 1d), -1d));
+            val c = acos(Math.clamp(sphereCos, -1d, 1d));
 
             return EARTH_RADIUS * c;
         }
@@ -232,7 +230,8 @@ public class EarthCalc {
             val cosU2 = 1 / sqrt((1 + tanU2 * tanU2));
             val sinU2 = tanU2 * cosU2;
 
-            double λ = L, λʹ, iterationLimit = 100, cosSqα, σ, cos2σM, cosσ, sinσ, sinλ, cosλ;
+            double λ = L, λʹ, cosSqα, σ, cos2σM, cosσ, sinσ, sinλ, cosλ;
+            int iterationLimit = 100;
             do {
                 sinλ = sin(λ);
                 cosλ = cos(λ);

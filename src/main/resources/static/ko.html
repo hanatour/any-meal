@@ -83,24 +83,24 @@
         };
 
         function geoFindMe() {
-            function success(position) {
-                usedDefaultLocation = false;
-                var y = position.coords.latitude;
-                var x = position.coords.longitude;
-                getFunc(x, y);
-            }
-
-            function error(err) {
-                console.log(new Date().toUTCString(), 'Unable to retrieve your location', err);
-                usedDefaultLocation = true;
-                getFunc("", "");
-            }
-
             if (!navigator.geolocation) {
                 alert('Geolocation is not supported by your browser');
             } else {
-                navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+                navigator.geolocation.getCurrentPosition(geoFindMeSuccess, geoFindMeError, positionOptions);
             }
+        }
+
+        function geoFindMeSuccess(position) {
+            usedDefaultLocation = false;
+            var y = position.coords.latitude;
+            var x = position.coords.longitude;
+            getFunc(x, y);
+        }
+
+        function geoFindMeError(err) {
+            console.log(new Date().toUTCString(), 'Unable to retrieve your location', err);
+            usedDefaultLocation = true;
+            getFunc("", "");
         }
 
         var xhr;
@@ -168,9 +168,9 @@
         function showMapIfAvailable(container, json) {
             var x = json && json.x;
             var y = json && json.y;
-            var lat = parseFloat(y);
-            var lng = parseFloat(x);
-            if (isNaN(lat) || isNaN(lng)) return;
+            var lat = Number.parseFloat(y);
+            var lng = Number.parseFloat(x);
+            if (Number.isNaN(lat) || Number.isNaN(lng)) return;
             var req = new XMLHttpRequest();
             req.open('GET', '/api/config', true);
             req.onreadystatechange = function () {
