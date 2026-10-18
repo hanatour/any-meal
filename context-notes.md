@@ -83,3 +83,9 @@
 - 기존 테스트를 추가/실행하지 않는 저장소 지침 우선순위 제약이 있으므로, 변경은 정적 코드 검토와 diff 확인으로 검증한다.
 - 홈페이지 위치 조회, API 호출, 결과 표시, HTML 이스케이프, 지도 표시 코드를 `static/js/main.js`로 추출했다. `document.documentElement.lang`에 따라 결과 문구를 골라 각 페이지의 기존 한국어/영어 문장을 유지한다.
 - `LanguagePreference.isKoreanPreferred`를 추가해 홈 라우팅과 기본 검색 소스 선택이 같은 첫 `Accept-Language` 판별을 사용하도록 했다. `git diff --check`는 통과했다.
+- GraalVM 네이티브 빌드 계획 (2026-10-18): 저장소의 Java 25/Spring Boot 4.1.1 앱에 GraalVM Native Build Tools Gradle 플러그인을 연결하고 macOS ARM64 호스트에서 실행 파일 생성을 확인한다.
+- 로컬 환경은 GraalVM CE 25, `native-image` 25, macOS ARM64, clang이 확인됐다. 이 빌드는 현재 호스트 전용 산출물이며 다른 OS/아키텍처용 교차 컴파일은 범위에 넣지 않는다.
+- GraalVM 공식 문서에는 1.1.16이 최신으로 표시됐지만, 플러그인 포털/Maven Central에 실제 배포된 버전은 1.1.14까지임을 확인했다. 재현 가능한 배포 버전 1.1.14를 적용한다. Spring Boot Gradle 플러그인은 GraalVM 플러그인 적용 시 AOT 작업을 자동 구성한다.
+- `./gradlew tasks --all`에서 `nativeCompile`, `nativeRun`, `nativeTest`가 등록된 것을 확인했고, `./gradlew nativeCompile`이 성공해 `build/native/nativeCompile/any-meal`(94.19 MB)을 생성했다.
+- 호스트는 ARM64지만 선택된 GraalVM과 생성된 Mach-O 실행 파일은 x86_64다. 따라서 현재 산출물은 Rosetta 실행 대상이며, ARM64 네이티브 산출물에는 ARM64 GraalVM JDK가 필요하다. 네이티브 실행 중 포트 8080 바인딩은 샌드박스가 거부해 서버 구동 확인은 완료하지 못했다.
+- README에 GraalVM 전제 조건, `./gradlew nativeCompile` 명령, 산출물 경로 및 CPU 아키텍처 조건을 기록했다.

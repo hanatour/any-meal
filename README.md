@@ -21,6 +21,16 @@ cp .env.example .env   # .env에 사용할 API 키 입력 후
 ./gradlew test
 ```
 
+## 네이티브 실행 파일 빌드
+
+GraalVM JDK 25와 `native-image`, 네이티브 컴파일러가 필요합니다. macOS에서는 Xcode Command Line Tools의 C 컴파일러를 사용할 수 있습니다.
+
+```bash
+./gradlew nativeCompile
+```
+
+실행 파일은 `build/native/nativeCompile/any-meal`에 생성됩니다. 산출물은 빌드에 사용한 GraalVM의 운영체제와 CPU 아키텍처를 따르므로, ARM64 실행 파일이 필요하면 ARM64용 GraalVM JDK를 선택해야 합니다.
+
 ## API
 
 | 메서드 | 경로 | 설명 |
