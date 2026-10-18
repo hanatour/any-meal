@@ -107,3 +107,8 @@
 - [x] Override vulnerable plugin transitive Jackson and Commons Lang versions
 - [x] Run the Gradle build
 - [x] Push plugin classpath remediation and verify GitHub alerts/SBOM
+
+## 중복 코드 정리 2026-10-18
+- [x] 한국어/영어 홈페이지의 공통 브라우저 동작을 확인하고 공유 파일로 추출
+- [x] 서버의 중복 언어 판별을 공통 로직으로 통합
+- [x] 관련 기존 동작과 변경 범위를 검토

@@ -48,7 +48,7 @@ public class AnyMealController {
         if (!isSouthKoreaCoordinate(x, y)) {
             return "google";
         }
-        if (isKoreanPreferred(acceptLanguage)) {
+        if (LanguagePreference.isKoreanPreferred(acceptLanguage)) {
             return "kakao";
         }
         return "google";
@@ -63,14 +63,6 @@ public class AnyMealController {
         } catch (NumberFormatException e) {
             return true;
         }
-    }
-
-    private static boolean isKoreanPreferred(String acceptLanguage) {
-        if (StringUtils.isEmpty(acceptLanguage)) {
-            return false;
-        }
-        String firstLanguage = acceptLanguage.split(",", 2)[0].trim().toLowerCase(Locale.ROOT);
-        return firstLanguage.equals("ko") || firstLanguage.startsWith("ko-");
     }
 
     private static String resolveLanguageCode(String acceptLanguage) {

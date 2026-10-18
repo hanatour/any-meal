@@ -78,3 +78,8 @@
 - Overrode Boot's `jackson-bom.version` to 3.1.7; `dependencyInsight` now resolves Jackson core/databind to 3.1.7, and `./gradlew build` passes. The remaining Commons Lang alert is stale: Gradle resolves 3.20.0, the advisory affects versions below 3.18.0, and GitHub reports the alert has not updated since 2025-11-22. No dependency change is warranted for that alert.
 - GitHub's current SBOM confirmed old Jackson 3.1.5 and Commons Lang 3.16.0 remained through Spring Boot Gradle plugin 4.1.1's `spring-boot-buildpack-platform` build classpath. Added a narrowly scoped `buildscript.configurations.classpath` resolution force to Jackson core/databind 3.1.7 and Commons Lang 3.20.0. `./gradlew buildEnvironment` shows these plugin transitive edges now resolve to patched versions, and `./gradlew build` passes. Verify the GitHub SBOM and alert list after pushing.
 - After pushing commit `3346fd4`, GitHub's SBOM refreshed and lists only Jackson core/databind 3.1.7, Commons Lang 3.20.0, and Tomcat 11.0.26. Dependabot API now reports zero open alerts; `main` is synced with `origin/main`.
+- 중복 코드 정리 계획 (2026-10-18): 서버 소스와 정적 페이지에서 반복 구현을 살펴보고, 언어별 문구·스타일처럼 달라야 하는 부분은 유지하면서 반복되는 동작만 작은 공통 모듈로 모은다.
+- 현재 확인한 반복은 `en.html`과 `ko.html`의 거의 동일한 위치 조회/결과 렌더링 JavaScript 및 `HomePageController`와 `AnyMealController`의 첫 선호 언어 판별이다. `index.html`은 `en.html`과 SEO/문구가 달라 통합 대상에서 제외한다.
+- 기존 테스트를 추가/실행하지 않는 저장소 지침 우선순위 제약이 있으므로, 변경은 정적 코드 검토와 diff 확인으로 검증한다.
+- 홈페이지 위치 조회, API 호출, 결과 표시, HTML 이스케이프, 지도 표시 코드를 `static/js/main.js`로 추출했다. `document.documentElement.lang`에 따라 결과 문구를 골라 각 페이지의 기존 한국어/영어 문장을 유지한다.
+- `LanguagePreference.isKoreanPreferred`를 추가해 홈 라우팅과 기본 검색 소스 선택이 같은 첫 `Accept-Language` 판별을 사용하도록 했다. `git diff --check`는 통과했다.
