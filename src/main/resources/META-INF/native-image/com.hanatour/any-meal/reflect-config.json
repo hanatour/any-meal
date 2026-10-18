@@ -1,0 +1,54 @@
+[
+  {
+    "name": "com.hanatour.anymeal.CategoryResponse",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.Meta",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.Restaurant",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.naver.NaverLocalResponse",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.naver.NaverLocalItem",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$GoogleNearbySearchResponse",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$GooglePlace",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$GoogleDisplayName",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$GoogleLocation",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$SearchNearbyRequest",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$LocationRestriction",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$Circle",
+    "allRecordComponents": true
+  },
+  {
+    "name": "com.hanatour.anymeal.GoogleRestaurantSearchSource$Center",
+    "allRecordComponents": true
+  }
+]

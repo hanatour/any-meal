@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,6 +20,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Component
+@RegisterReflectionForBinding({
+    GoogleRestaurantSearchSource.GoogleNearbySearchResponse.class,
+    GoogleRestaurantSearchSource.GooglePlace.class,
+    GoogleRestaurantSearchSource.GoogleDisplayName.class,
+    GoogleRestaurantSearchSource.GoogleLocation.class,
+    GoogleRestaurantSearchSource.SearchNearbyRequest.class,
+    GoogleRestaurantSearchSource.LocationRestriction.class,
+    GoogleRestaurantSearchSource.Circle.class,
+    GoogleRestaurantSearchSource.Center.class
+})
 public final class GoogleRestaurantSearchSource implements RestaurantSearchSource {
 
     private static final String API_URL = "https://places.googleapis.com/v1/places:searchNearby";

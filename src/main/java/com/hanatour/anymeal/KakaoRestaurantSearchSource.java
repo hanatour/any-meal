@@ -4,6 +4,7 @@ import com.hanatour.anymeal.geocalc.Coordinate;
 import com.hanatour.anymeal.geocalc.EarthCalc;
 import com.hanatour.anymeal.geocalc.Point;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@RegisterReflectionForBinding(CategoryResponse.class)
 public final class KakaoRestaurantSearchSource implements RestaurantSearchSource {
 
     private static final SecureRandom secureRandom = new SecureRandom();

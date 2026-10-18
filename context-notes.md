@@ -89,3 +89,8 @@
 - `./gradlew tasks --all`에서 `nativeCompile`, `nativeRun`, `nativeTest`가 등록된 것을 확인했고, `./gradlew nativeCompile`이 성공해 `build/native/nativeCompile/any-meal`(94.19 MB)을 생성했다.
 - 호스트는 ARM64지만 선택된 GraalVM과 생성된 Mach-O 실행 파일은 x86_64다. 따라서 현재 산출물은 Rosetta 실행 대상이며, ARM64 네이티브 산출물에는 ARM64 GraalVM JDK가 필요하다. 네이티브 실행 중 포트 8080 바인딩은 샌드박스가 거부해 서버 구동 확인은 완료하지 못했다.
 - README에 GraalVM 전제 조건, `./gradlew nativeCompile` 명령, 산출물 경로 및 CPU 아키텍처 조건을 기록했다.
+- 네이티브 실행에서 Kakao `RestTemplate.exchange(..., CategoryResponse.class)` 응답 디코딩 중 record components 리플렉션 오류가 보고됐다. AOT가 메서드 본문 안의 DTO를 추론하지 못한 것으로 보여, Spring의 `@RegisterReflectionForBinding`으로 해당 DTO 및 record component 타입들을 등록한다.
+- 첫 재빌드에서 Spring AOT binding 힌트가 CategoryResponse/Meta/Restaurant의 접근자 메서드는 포함했지만, GraalVM 25의 `Class.getRecordComponents()`용 `allRecordComponents` 메타데이터는 생성하지 않는 것을 확인했다. GraalVM reachability config에 세 record를 명시 등록해 이 별도 런타임 메타데이터를 제공한다.
+- 같은 `RestTemplate`-Jackson 구조인 Naver와 Google DTO도 Spring AOT가 사용처를 자동 탐지하지 않으므로, 세 검색 소스의 요청/응답 record에 바인딩 힌트를 붙이고 모든 API DTO record를 `allRecordComponents` 설정에 포함한다.
+- Spring AOT의 `@RegisterReflectionForBinding`은 DTO 및 전이 타입의 생성자/필드/접근자 힌트를 만들고, `reflect-config.json`은 Kakao, Naver, Google API의 record에 `allRecordComponents`를 추가한다. `./gradlew nativeCompile`가 성공했다.
+- 재빌드한 네이티브 앱은 임시 포트에서 정상 기동했고 `GET /api/config`가 HTTP 200을 반환했다. 실제 외부 장소검색 응답 디코딩은 API 호출이 필요하므로 이번 검증에서는 실행하지 않았다.

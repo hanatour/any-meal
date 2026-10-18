@@ -119,3 +119,8 @@
 - [x] Gradle 작업 확인 및 네이티브 실행 파일 빌드
 - [x] 빌드 산출물과 실행 명령 기록
 - [x] 현재 x86_64 GraalVM과 ARM64 호스트의 아키텍처 차이 기록
+
+### Native Image record reflection fix
+- [x] Kakao, Naver, Google DTO를 Spring AOT 리플렉션 바인딩 힌트에 등록
+- [x] GraalVM record component introspection 메타데이터 추가
+- [x] 네이티브 이미지 재빌드 후 생성된 힌트와 동작 확인

@@ -3,6 +3,7 @@ package com.hanatour.anymeal;
 import com.hanatour.anymeal.naver.NaverLocalItem;
 import com.hanatour.anymeal.naver.NaverLocalResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Slf4j
 @Component
+@RegisterReflectionForBinding(NaverLocalResponse.class)
 public final class NaverRestaurantSearchSource implements RestaurantSearchSource {
 
     private static final RestTemplate REST_TEMPLATE = new RestTemplate();
