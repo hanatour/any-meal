@@ -136,3 +136,9 @@
 - [x] Load server-side variables from `deploy/.env` without deploying local secrets
 - [x] Validate script syntax, workflow YAML, .env loading, and Gradle Native Image build
 - [x] Commit and push the workflow and startup script
+
+## Latest Oracle GraalVM 2026-10-20
+- [x] Switch the workflow from GraalVM Community 25.0 to Oracle GraalVM 25i-latest
+- [x] Confirm the setup action's latest innovation-release version syntax
+- [x] Validate YAML syntax
+- [x] Commit and push the workflow update

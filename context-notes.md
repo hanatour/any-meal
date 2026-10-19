@@ -102,3 +102,5 @@
 - 새 시작 스크립트는 스크립트와 같은 디렉터리의 서버 전용 `.env`를 shell export 모드로 읽고, 같은 디렉터리의 `any-meal`을 `nohup`으로 시작한다. `.env`는 워크플로에서 전송하지 않으며 Git 저장소에도 포함하지 않는다.
 
 - `bash -n`, Ruby YAML 파싱, 임시 실행 파일로 `.env` 값 export를 확인했다. `./gradlew test nativeCompile`가 통과했고 macOS x86_64 Native Image를 생성했다. GitHub Actions의 GraalVM Linux x86_64 실행 파일은 워크플로 실행 시 생성된다.
+
+- GraalVM 선택 변경 (2026-10-20): 요청에 따라 `graalvm-community` 25.0 대신 Oracle GraalVM의 `distribution: graalvm`, `version: 25i-latest`를 사용한다. 2026-10-20 기준 공개된 최신 25 innovation 라인은 25.4이며, `25i-latest`는 이후 릴리스 때 자동으로 최신 innovation 버전을 선택한다. 빌드 입력이 향후 릴리스에서 바뀔 수 있다는 rolling-version 특성을 수용한다.
