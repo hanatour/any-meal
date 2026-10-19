@@ -129,3 +129,10 @@
 - [x] Confirm the Korean page build date placeholder is replaced in the processed resource
 - [x] Include `static/ko.html` in the existing build date expansion
 - [x] Review the focused diff for unintended changes
+
+## Native Image GitHub Actions deployment 2026-10-20
+- [x] Set up GraalVM 25 and run Gradle tests with `nativeCompile`
+- [x] Deploy the Linux Native Image executable and renamed startup script to the server
+- [x] Load server-side variables from `deploy/.env` without deploying local secrets
+- [x] Validate script syntax, workflow YAML, .env loading, and Gradle Native Image build
+- [x] Commit and push the workflow and startup script

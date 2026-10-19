@@ -97,3 +97,8 @@
 
 - 파일 버전 표시 수정 계획 (2026-10-20): `ko.html`에 `${buildDate}`가 그대로 보이는 원인은 Gradle `processResources`의 `filesMatching` 대상에서 이 파일만 빠진 것이다. 기존 `index.html`·`en.html` 처리와 동일하게 `static/ko.html`도 치환 대상으로 추가하고, 산출 리소스의 placeholder 여부와 diff를 확인한다.
 - `processResources`를 강제 재실행해 `build/resources/main/static/ko.html`의 `${buildDate}`가 `2026-10-20 06:29`로 치환됨을 확인했다. 첫 일반 실행은 기존 출력이 오래되어 `UP-TO-DATE`로 건너뛰었으므로 강제 재실행으로 산출물을 갱신했다. `git diff --check`도 통과했다.
+
+- 네이티브 배포 계획 (2026-10-20): GitHub Actions에서 GraalVM 25로 테스트와 `nativeCompile`을 실행하고 Linux 실행 파일 및 `start-anymeal-native.sh`를 `/home/ubuntu/deploy`에 배포한다. PR에서는 빌드/테스트만 수행하고 서버 배포는 건너뛴다.
+- 새 시작 스크립트는 스크립트와 같은 디렉터리의 서버 전용 `.env`를 shell export 모드로 읽고, 같은 디렉터리의 `any-meal`을 `nohup`으로 시작한다. `.env`는 워크플로에서 전송하지 않으며 Git 저장소에도 포함하지 않는다.
+
+- `bash -n`, Ruby YAML 파싱, 임시 실행 파일로 `.env` 값 export를 확인했다. `./gradlew test nativeCompile`가 통과했고 macOS x86_64 Native Image를 생성했다. GitHub Actions의 GraalVM Linux x86_64 실행 파일은 워크플로 실행 시 생성된다.
