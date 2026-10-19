@@ -124,3 +124,8 @@
 - [x] Kakao, Naver, Google DTO를 Spring AOT 리플렉션 바인딩 힌트에 등록
 - [x] GraalVM record component introspection 메타데이터 추가
 - [x] 네이티브 이미지 재빌드 후 생성된 힌트와 동작 확인
+
+## Korean page build date
+- [x] Confirm the Korean page build date placeholder is replaced in the processed resource
+- [x] Include `static/ko.html` in the existing build date expansion
+- [x] Review the focused diff for unintended changes

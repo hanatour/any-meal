@@ -94,3 +94,6 @@
 - 같은 `RestTemplate`-Jackson 구조인 Naver와 Google DTO도 Spring AOT가 사용처를 자동 탐지하지 않으므로, 세 검색 소스의 요청/응답 record에 바인딩 힌트를 붙이고 모든 API DTO record를 `allRecordComponents` 설정에 포함한다.
 - Spring AOT의 `@RegisterReflectionForBinding`은 DTO 및 전이 타입의 생성자/필드/접근자 힌트를 만들고, `reflect-config.json`은 Kakao, Naver, Google API의 record에 `allRecordComponents`를 추가한다. `./gradlew nativeCompile`가 성공했다.
 - 재빌드한 네이티브 앱은 임시 포트에서 정상 기동했고 `GET /api/config`가 HTTP 200을 반환했다. 실제 외부 장소검색 응답 디코딩은 API 호출이 필요하므로 이번 검증에서는 실행하지 않았다.
+
+- 파일 버전 표시 수정 계획 (2026-10-20): `ko.html`에 `${buildDate}`가 그대로 보이는 원인은 Gradle `processResources`의 `filesMatching` 대상에서 이 파일만 빠진 것이다. 기존 `index.html`·`en.html` 처리와 동일하게 `static/ko.html`도 치환 대상으로 추가하고, 산출 리소스의 placeholder 여부와 diff를 확인한다.
+- `processResources`를 강제 재실행해 `build/resources/main/static/ko.html`의 `${buildDate}`가 `2026-10-20 06:29`로 치환됨을 확인했다. 첫 일반 실행은 기존 출력이 오래되어 `UP-TO-DATE`로 건너뛰었으므로 강제 재실행으로 산출물을 갱신했다. `git diff --check`도 통과했다.
