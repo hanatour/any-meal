@@ -104,3 +104,7 @@
 - `bash -n`, Ruby YAML 파싱, 임시 실행 파일로 `.env` 값 export를 확인했다. `./gradlew test nativeCompile`가 통과했고 macOS x86_64 Native Image를 생성했다. GitHub Actions의 GraalVM Linux x86_64 실행 파일은 워크플로 실행 시 생성된다.
 
 - GraalVM 선택 변경 (2026-10-20): 요청에 따라 `graalvm-community` 25.0 대신 Oracle GraalVM의 `distribution: graalvm`, `version: 25i-latest`를 사용한다. 2026-10-20 기준 공개된 최신 25 innovation 라인은 25.4이며, `25i-latest`는 이후 릴리스 때 자동으로 최신 innovation 버전을 선택한다. 빌드 입력이 향후 릴리스에서 바뀔 수 있다는 rolling-version 특성을 수용한다.
+
+- 재시작 흐름 변경 (2026-10-20): GitHub Actions의 별도 서비스 중지 단계를 제거하고, `start-anymeal-native.sh`가 `ss`로 8080 리스너 PID를 찾아 TERM으로 종료한 뒤 최대 10초 대기한다. 종료되지 않으면 KILL을 시도한다. 포트는 열려 있지만 PID를 식별할 수 없는 경우 다른 프로세스를 추측해 종료하지 않고 시작을 실패한다.
+
+- `bash -n`, Ruby YAML 파싱, `git diff --check`를 통과했다. 모의 8080 리스너 PID를 종료하고 시작 스크립트가 `.env` 값을 새 프로세스에 전달하는 것을 확인했다.

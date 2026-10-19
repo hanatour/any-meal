@@ -30,25 +30,6 @@ jobs:
     - name: Test and build Native Image
       run: ./gradlew test nativeCompile
 
-    - name: Stop service
-      if: github.event_name != 'pull_request'
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_ADDR }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          PIDS=$(pgrep -f '[j]ava.*any-meal' || true)
-          if [ -n "$PIDS" ]; then kill $PIDS; fi
-          if [ -f ~/deploy/any-meal.pid ]; then
-            PID=$(cat ~/deploy/any-meal.pid)
-            if ps -p "$PID" -o args= | grep -Fq '/home/ubuntu/deploy/any-meal'; then
-              kill "$PID"
-            fi
-            rm -f ~/deploy/any-meal.pid
-          fi
-          pkill -f '[ /]home/ubuntu/deploy/any-meal' || true
-
     - name: Deploy Native Image
       if: github.event_name != 'pull_request'
       uses: easingthemes/ssh-deploy@main

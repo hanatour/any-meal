@@ -142,3 +142,9 @@
 - [x] Confirm the setup action's latest innovation-release version syntax
 - [x] Validate YAML syntax
 - [x] Commit and push the workflow update
+
+## Native service restart by port 2026-10-20
+- [x] Remove the GitHub Actions stop-service step
+- [x] Make the startup script find and stop listeners on port 8080 before launch
+- [x] Validate shell syntax, port-owner handling, and workflow YAML
+- [x] Commit and push the workflow update
